@@ -1,7 +1,11 @@
 import { Box, Button, Flex, Image, Text, VStack } from '@chakra-ui/react';
 import React from 'react';
+import { useAppSelector } from '../../hooks/useReduxHook';
+import AuthModal from '../ui/AuthModal';
+import CourseCard from '../ui/CourseCard';
 
 export default function MainPage(): JSX.Element {
+  const modal = useAppSelector((state) => state.auth.authModal);
   return (
     <Box>
       <Flex
@@ -107,10 +111,10 @@ export default function MainPage(): JSX.Element {
             />
           </Box>
         </VStack>
-
-        {/* Дополнительный текст и кнопка с датой */}
-        {/* Векторные изображения */}
       </Flex>
+      {modal && <AuthModal />}
+
+      <CourseCard />
     </Box>
   );
 }
