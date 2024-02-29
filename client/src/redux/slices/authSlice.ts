@@ -1,16 +1,22 @@
+import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 import type { AuthStateType } from '../../types/authType';
-import { checkTokenThunk, logOutThunk, signInThunk } from '../thunkActions/authThunkActions';
+import { checkTokenThunk, logOutThunk, signInThunk, signUpThunk } from '../thunkActions/authThunkActions';
 
 const initialState: AuthStateType = {
   accessToken: '',
   user: { status: 'pending' },
+  authModal: false
 };
 
 const authSlice = createSlice({
   name: 'auth',
   initialState,
-  reducers: {},
+  reducers: {
+    setModal: (state, action: PayloadAction<boolean>) => {
+      state.authModal = action.payload;
+    }
+  },
   extraReducers: (builder) => {
     builder.addCase(checkTokenThunk.fulfilled, (state, action) => {
       const { accessToken, user } = action.payload;
@@ -25,6 +31,17 @@ const authSlice = createSlice({
       state.user.status = 'logged';
       state.user = { ...user, ...state.user };
     });
+    builder.addCase(signUpThunk.fulfilled, (state, action) => {
+      const { accessToken, user } = action.payload;
+      state.accessToken = accessToken;
+      state.user.status = 'logged';
+      state.user = { ...user, ...state.user };
+    });
+
+    builder.addCase(logOutThunk.fulfilled, (state, action) => {
+      state.accessToken = '';
+      state.user.status = 'guest'
+    })
 
     builder.addMatcher(
       (action: { type: string }) =>
@@ -43,5 +60,7 @@ const authSlice = createSlice({
     );
   },
 });
+
+export const { setModal } = authSlice.actions;
 
 export default authSlice.reducer;
