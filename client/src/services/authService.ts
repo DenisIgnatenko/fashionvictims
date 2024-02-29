@@ -14,7 +14,7 @@ class AuthService {
   }
 
   public signUp(data: UserSignInType): Promise<AuthStateType> {
-    return this.api.post<AuthStateType>('/auth/signin', data).then((res) => res.data);
+    return this.api.post<AuthStateType>('/auth/signup', data).then((res) => res.data);
   }
 
   public logOut(): Promise<AxiosResponse> {

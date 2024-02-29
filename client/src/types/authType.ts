@@ -23,4 +23,5 @@ export type UserStateType =
 export type AuthStateType = {
   accessToken: string;
   user: UserStateType;
+  authModal: boolean;
 };

@@ -19,6 +19,7 @@ module.exports = {
       },
       role: {
         type: Sequelize.STRING,
+        defaultValue: 'user',
       },
       img: {
         type: Sequelize.STRING,
