@@ -14,9 +14,32 @@ const theme = extendTheme({
       body: {
         bg: '#FFF0F7',
       },
-      h1: {
-        fontSize: '3xl',
-      },
+    },
+  },
+  textStyles: {
+    customHeading: {
+      fontSize: '7xl',
+      color: '#FFF',
+      fontFamily: 'Montserrat',
+      fontStyle: 'italic',
+      fontWeight: '500',
+      lineHeight: 'normal',
+    },
+    heroSimpleText: {
+      fontSize: 'lg',
+      color: '#FFF',
+      fontFamily: 'Montserrat',
+      fontStyle: 'normal',
+      fontWeight: '400',
+      lineHeight: '24px',
+    },
+    heroH3heading: {
+      color: '#E293B6',
+      fontFamily: 'Montserrat',
+      fontSize: '28px',
+      fontStyle: 'italic',
+      fontWeight: '500',
+      lineHeight: '24px' /* 85.714% */,
     },
   },
   components: {
