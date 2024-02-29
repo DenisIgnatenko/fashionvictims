@@ -5,14 +5,14 @@ import React from 'react'
 export default function NavBar(): JSX.Element {
 	const isMobile = useBreakpointValue({ base: true, md: false })
 	return (
-		<Flex height='66px' maxWidth='100%' background='#FFF0F7'>
+		<Flex height='66px' maxWidth='100%' background='#FFF0F7'
 			borderTopRadius="30px"
 			width="full"
 			height="74px"
 			maxWidth="100%"
 			background="#4D6877"
 			px={4}
-			>
+		>
 			<Box
 				borderTopRadius='30px'
 				background='#4D6877'
