@@ -1,5 +1,8 @@
-import { AtSignIcon, HamburgerIcon, LockIcon } from '@chakra-ui/icons';
+import { ArrowLeftIcon, AtSignIcon, ChevronLeftIcon, ExternalLinkIcon, HamburgerIcon, LockIcon, NotAllowedIcon, UnlockIcon } from '@chakra-ui/icons';
 import {
+  Avatar,
+  Box,
+  Center,
   Flex,
   IconButton,
   Link,
@@ -7,24 +10,30 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
+  TagLeftIcon,
+  Text,
+  WrapItem,
   useBreakpointValue,
 } from '@chakra-ui/react';
 import React from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks/useReduxHook';
+import { setModal } from '../../redux/slices/authSlice';
+import { logOutThunk } from '../../redux/thunkActions/authThunkActions';
 
 export default function NavBar(): JSX.Element {
   const isMobile = useBreakpointValue({ base: true, md: false });
-
+  const user = useAppSelector((state) => state.auth.user)
+  const dispatch = useAppDispatch()
   return (
-    <Flex height="100px" maxWidth="100%" background="#FFF0F7" alignItems="flex-end">
-      <Flex
-        height="80px"
-        width="full"
-        background="#4D6877"
-        borderTopRadius="30px"
-        alignItems="center"
-        justifyContent={isMobile ? 'left' : 'space-between'}
-        px={4}
-      >
+    <Flex
+      borderTopRadius="30px"
+      width="full"
+      height="74px"
+      maxWidth="100%"
+      background="#4D6877"
+      px={4}
+    >
+      <Box borderTopRadius="30px" background="#4D6877" width="full" height="74px" px={4}>
         {isMobile ? (
           <Menu>
             <MenuButton
@@ -35,55 +44,70 @@ export default function NavBar(): JSX.Element {
               color="#FFFFFF"
             />
             <MenuList>
-              <MenuItem>Что это такое?</MenuItem>
-              <MenuItem>Наши курсы</MenuItem>
-              <MenuItem>Материалы</MenuItem>
-              <MenuItem>Преподаватели</MenuItem>
-              <MenuItem>Контакты</MenuItem>
+              <MenuList>
+                <MenuItem>Что это такое?</MenuItem>
+                <MenuItem>Наши курсы</MenuItem>
+                <MenuItem>Материалы</MenuItem>
+                <MenuItem>Преподаватели</MenuItem>
+                <MenuItem>Контакты</MenuItem>
+              </MenuList>
             </MenuList>
           </Menu>
         ) : (
-          <>
-            <Flex flex="1" justifyContent="center">
-              {/* Пустой блок для баланса */}
-            </Flex>
-            <Flex justifyContent="center" flex="6" alignItems="center">
-              {/* Ссылки, центрированные */}
-              <Link mx="5" variant="underlineHover" href="/">
+          <Flex justify="center" align="center" height="100%">
+            {(user.status === 'logged' &&
+            <Text variant="">
+              Привет,{`${user.name}`}
+            </Text>
+            )}
+            <Center mx="auto">
+              {' '}
+              {/* Центрируем ссылки */}
+              <Link variant="underlineHover" href="/">
                 Что это такое?
               </Link>
-              <Link mx="5" variant="underlineHover" href="/">
+              <Link variant="underlineHover" href="/">
                 Наши курсы
               </Link>
-              <Link mx="5" variant="underlineHover" href="/">
+              <Link variant="underlineHover" href="/">
                 Материалы
               </Link>
-              <Link mx="5" variant="underlineHover" href="/">
+              <Link variant="underlineHover" href="/">
                 Преподаватели
               </Link>
-              <Link mx="5" variant="underlineHover" href="/">
+              <Link variant="underlineHover" href="/">
                 Контакты
               </Link>
-            </Flex>
-            <Flex flex="1" justifyContent="flex-end">
-              {/* Иконки входа и регистрации */}
-              <IconButton
-                aria-label="Login"
-                icon={<AtSignIcon />}
-                variant="ghost"
-                color="whiteAlpha.900"
-                mr="2"
-              />
-              <IconButton
+            </Center>
+            {/* <Spacer /> /!* Элемент для разделения пространства *!/ */}
+            {/* <IconButton
+              aria-label="Login"
+              icon={<AtSignIcon />}
+              variant="ghost"
+              color="whiteAlpha.900"
+            /> */}
+            {user.status === 'logged' ?
+              <>
+                <IconButton onClick={() => void dispatch(logOutThunk())}
+                  aria-label="Logout"
+                  icon={<NotAllowedIcon />}
+                  variant="ghost"
+                  color="whiteAlpha.900"
+                />
+                <WrapItem>
+                  <Avatar size='md' name={user.name} src={user.img} />
+                </WrapItem>
+              </> :
+              <IconButton onClick={() => dispatch(setModal(true))}
                 aria-label="Register"
-                icon={<LockIcon />}
+                icon={<UnlockIcon />}
                 variant="ghost"
                 color="whiteAlpha.900"
               />
-            </Flex>
-          </>
+            }
+          </Flex>
         )}
-      </Flex>
+      </Box>
     </Flex>
   );
 }

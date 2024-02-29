@@ -2,6 +2,7 @@ import { extendTheme } from '@chakra-ui/react';
 import '@fontsource/open-sans';
 import '@fontsource/montserrat';
 import linkStyles from './linkStyles';
+import buttonStyles from './buttonStyles';
 
 const theme = extendTheme({
   fonts: {
@@ -45,6 +46,9 @@ const theme = extendTheme({
     Link: {
       ...linkStyles,
     },
+    Button: {
+      ...buttonStyles,
+    }
   },
 });
 
