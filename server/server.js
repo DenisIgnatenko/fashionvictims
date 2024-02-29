@@ -25,5 +25,5 @@ app.use('/api/auth', userRouter);
 app.use('/api/tokens', tokensRouter);
 
 app.listen(PORT, () => {
-  console.log(`Server is running oncc port ${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
 });
