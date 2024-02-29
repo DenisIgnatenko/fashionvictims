@@ -1,9 +1,12 @@
 import React from 'react';
 import { Box, Button, Flex, VStack } from '@chakra-ui/react';
 import { Container } from '@chakra-ui/react';
+import { Image } from '@chakra-ui/react';
+import { Heading, Text } from '@chakra-ui/react';
 
 export default function CourseCard(): JSX.Element {
-  const coursTitle = 'История моды (что и когда) и теория моды (почему)'
+  const image = '/src/public/Group13.png';
+  const coursTitle = 'История моды (что и когда) и теория моды (почему)';
   const data = '12 октября';
   const backColor = '#B9DAF9';
   const count = 5;
@@ -12,43 +15,44 @@ export default function CourseCard(): JSX.Element {
     'Может, написать всё-таки хоть пару слов о курсе здесь? Кажется, что не хватает краткого анонса курса в несколько предложений, чтобы понять, подходит мне вообще эта тема или нет.';
 
   return (
-    <Box backgroundColor={backColor} borderRadius={30} p={6}>
-
-      <Flex direction={['column', 'row']}>
+    <Box backgroundColor={backColor} borderRadius={30} p={6} h="100%" >
+      <Flex h="100%" direction={['column', 'row']} justifyContent={['center', 'space-between']} alignItems={['center', 'stretch']}>
         <Container>
-        <Box flex={['none', '1']} mb={[4, 0]}>
-          тут картинка
-        </Box>
-        </Container>
-        <Container>
-        <VStack flex="2" spacing={6} align="stretch">
-          <Box h="auto" bg="yellow.200" p={4} borderRadius={8}>
-            <div>{coursTitle}</div>
+          <Box flex={['none', '1']} mb={[4, 1]}>
+            <Image  src={image}
+            />
           </Box>
-          <Flex justify={['flex-start', 'space-between']} alignItems="center" width="100%">
-            <VStack spacing={2} align="flex-start">
-              <div style={{ opacity: 0.6 }}>старт</div>
-              <div>{data}</div>
-            </VStack>
-            <VStack spacing={2} align="flex-start">
-              <div style={{ opacity: 0.6 }}>объем</div>
-              <div>{count} часов</div>
-            </VStack>
-            <VStack spacing={2} align="flex-start">
-              <div style={{ opacity: 0.6 }}>стоимость</div>
-              <div>{price} рублей</div>
-            </VStack>
-          </Flex>
-          <VStack>
-            <>
-              <div>{description}</div>
-              <Flex justify={['flex-start', 'space-between']} alignItems="center" width="100%" gap="40px">
+        </Container>
+        <Container justifyContent={'center'} >
+          <VStack flex="2" spacing={6} align="stretch">
+            <Heading fontStyle={'italic'}>{coursTitle}</Heading>
+            <Flex justify={['flex-start', 'space-between']} alignItems="center" width="100%">
+              <VStack spacing={2} align="flex-start">
+                <div style={{ opacity: 0.6 }}>старт</div>
+                <div style={{ fontWeight: 800 }}>{data}</div>
+              </VStack>
+              <VStack spacing={2} align="flex-start">
+                <div style={{ opacity: 0.6 }}>объем</div>
+                <div style={{ fontWeight: 800 }}>{count} часов</div>
+              </VStack>
+              <VStack spacing={2} align="flex-start">
+                <div style={{ opacity: 0.6 }}>стоимость</div>
+                <div style={{ fontWeight: 800 }}>{price} рублей</div>
+              </VStack>
+            </Flex>
+            <VStack flex="1" justify="flex-end" gap={10}>
+              <Text>{description}</Text>
+              <Flex
+                justify={['flex-end', 'space-between']}
+                alignItems="flex-end"
+                width="100%"
+                gap={1}
+              >
                 <Button variant="primeVariant">купить</Button>
                 <Button variant="secondVariant">подробнее</Button>
               </Flex>
-            </>
+            </VStack>
           </VStack>
-        </VStack>
         </Container>
       </Flex>
     </Box>
