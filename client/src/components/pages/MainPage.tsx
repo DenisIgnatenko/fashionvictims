@@ -1,11 +1,32 @@
 import { Box, Button, Flex, Image, Stack, Text, VStack } from '@chakra-ui/react';
 import React from 'react';
-import { useAppSelector } from '../../hooks/useReduxHook';
+import { useAppDispatch, useAppSelector } from '../../hooks/useReduxHook';
+import { setOpenTest } from '../../redux/slices/testsSlice';
+import type { TestType } from '../../types/testsType';
 import AuthModal from '../ui/AuthModal';
 import CourseCard from '../ui/CourseCard';
+import TestDialogueModal from '../ui/TestDialogueModal';
+
+const testItem: TestType = {
+  id: 1,
+  name: 'Test',
+  description: 'Test description',
+  userId: 1,
+  questions: [
+    {
+      id: 1,
+      testId: 1,
+      question: 'Test question',
+      answer: 'Test answer',
+      points: 1,
+    },
+  ],
+};
 
 export default function MainPage(): JSX.Element {
   const modal = useAppSelector((state) => state.auth.authModal);
+  const openTest = useAppSelector((state) => state.test.openTest);
+  const dispatch = useAppDispatch();
   return (
     <Box>
       <Flex
@@ -31,11 +52,14 @@ export default function MainPage(): JSX.Element {
               Курсы о том, как работает мода, что делает её таким мощным и влиятельным феноменом,
               как она формируется
             </Text>
-            <Button>Подробнее</Button>
+            <Button variant="primeVariant">Подробнее</Button>
             <Text textStyle="heroH3heading" mt={12}>
               Ближайший старт
             </Text>
             <Text textStyle="heroSimpleText">20 сентября</Text>
+            <Button variant="primeVariant" onClick={() => void dispatch(setOpenTest(testItem))}>
+              Пройти тест
+            </Button>
           </VStack>
         </VStack>
 
@@ -113,6 +137,9 @@ export default function MainPage(): JSX.Element {
         </VStack>
       </Flex>
       {modal && <AuthModal />}
+      {openTest && <TestDialogueModal />}
+
+      <CourseCard />
       <Stack spacing={5}>
         {Array(5)
           .fill(0)
