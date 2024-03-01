@@ -23,10 +23,10 @@ export default function CourseCard(): JSX.Element {
             />
           </Box>
         </Container>
-        <Container justifyContent={'center'} >
+        <Container justifyContent={'center'} m={10} >
           <VStack flex="2" spacing={6} align="stretch">
             <Heading fontStyle={'italic'}>{coursTitle}</Heading>
-            <Flex justify={['flex-start', 'space-between']} alignItems="center" width="100%">
+            <Flex justify={['flex-start', 'space-between']} alignItems="center" width="70%">
               <VStack spacing={2} align="flex-start">
                 <div style={{ opacity: 0.6 }}>старт</div>
                 <div style={{ fontWeight: 800 }}>{data}</div>
@@ -48,8 +48,8 @@ export default function CourseCard(): JSX.Element {
                 width="100%"
                 gap={1}
               >
-                <Button variant="primeVariant">купить</Button>
-                <Button variant="secondVariant">подробнее</Button>
+                <Button variant="primeVariant">Kупить курс</Button>
+                <Button variant="secondVariant">Подробнее о курсе</Button>
               </Flex>
             </VStack>
           </VStack>
