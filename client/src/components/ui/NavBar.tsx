@@ -18,11 +18,12 @@ import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/useReduxHook';
 import { setModal } from '../../redux/slices/authSlice';
 import { logOutThunk } from '../../redux/thunkActions/authThunkActions';
-
+import AuthModal from './AuthModal';
 export default function NavBar(): JSX.Element {
   const isMobile = useBreakpointValue({ base: true, md: false });
-  const user = useAppSelector((state) => state.auth.user);
-  const dispatch = useAppDispatch();
+  const modal = useAppSelector((state) => state.auth.authModal);
+  const user = useAppSelector((state) => state.auth.user)
+  const dispatch = useAppDispatch()
   return (
     <Flex
       borderTopRadius="30px"
@@ -106,6 +107,7 @@ export default function NavBar(): JSX.Element {
             )}
           </Flex>
         )}
+              {modal && <AuthModal />}
       </Box>
     </Flex>
   );

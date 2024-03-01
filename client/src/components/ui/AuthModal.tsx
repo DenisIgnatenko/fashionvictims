@@ -15,14 +15,13 @@ import {
     Spacer,
     Box,
     MenuList,
-    HStack
+    HStack,
+    Link
 } from '@chakra-ui/react'
-import { Link, NavLink } from 'react-router-dom'
 import { useAppDispatch } from '../../hooks/useReduxHook'
 import { signInThunk, signUpThunk } from '../../redux/thunkActions/authThunkActions'
 import type { UserSignInType } from '../../types/authType'
 import { setModal } from '../../redux/slices/authSlice'
-import NavBar from './NavBar'
 
 export default function AuthModal(): JSX.Element {
     const [register, setRegister] = useState(false)
@@ -35,31 +34,38 @@ export default function AuthModal(): JSX.Element {
         void dispatch(register ? signUpThunk(data) : signInThunk(data))
         onClose()
     };
-
-
+    
     return (
         <Modal isOpen onClose={onClose}>
             <ModalOverlay>
-                <ModalContent height="400px">
+                <ModalContent borderRadius="15px" height="400px">
                     <ModalHeader><HStack>
-                        <Box onClick={()=>setRegister(false)} borderBottom={register ?'5px solid orange': '5px solid transparent' }>
+                        <Box as="button" onClick={() => setRegister(false)} borderBottom={register ? '5px solid transparent' : '5px solid orange' }>
                             Войти
                         </Box>
-                        <Box onClick={()=>setRegister(true)} borderBottom={register ? '5px solid transparent' :'5px solid orange' }>
+                        <Box as="button" onClick={() => setRegister(true)} borderBottom={register ? '5px solid orange' : '5px solid transparent' }>
                             Зарегистрироваться
                         </Box>
                     </HStack></ModalHeader>
-                    
+
                     <ModalCloseButton />
                     <ModalBody>
-                        <form onSubmit={authHandler}>
+                        <Box as='form' onSubmit={authHandler}>
                             <VStack
                                 divider={<StackDivider borderColor='gray.200' />}
                                 spacing={4}
                                 align='stretch'>
-                                <Input placeholder='email' name='email' />
-                                <Input placeholder='password' name='password' />
-                                {register && <Input placeholder='name' name='name' />}
+                                <FormControl>
+                                    <Input placeholder='email' name='email' />
+                                </FormControl>
+                                <FormControl>
+                                    <Input placeholder='password' name='password' />
+                                </FormControl>
+                                {register &&
+                                    <FormControl>
+                                        <Input placeholder='name' name='name' />
+                                    </FormControl>
+                                }
                             </VStack>
                             {register ?
                                 <Text onClick={() => setRegister((prev) => !prev)}>
@@ -70,8 +76,7 @@ export default function AuthModal(): JSX.Element {
                                 </Text>}
                             <Box h="38px" />
                             <Button position='absolute' bottom='45px' type='submit'>{register ? 'Зарегистрироваться' : 'Войти'}</Button>
-                        </form>
-
+                        </Box>
                     </ModalBody>
                 </ModalContent>
             </ModalOverlay>
