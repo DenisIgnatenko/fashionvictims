@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Image, Text, VStack } from '@chakra-ui/react';
+import { Box, Button, Flex, Image, Stack, Text, VStack } from '@chakra-ui/react';
 import React from 'react';
 import { useAppSelector } from '../../hooks/useReduxHook';
 import AuthModal from '../ui/AuthModal';
@@ -113,8 +113,13 @@ export default function MainPage(): JSX.Element {
         </VStack>
       </Flex>
       {modal && <AuthModal />}
-
-      <CourseCard />
+      <Stack spacing={5}>
+        {Array(5)
+          .fill(0)
+          .map((el, index) => (
+            <CourseCard index={index} />
+          ))}
+      </Stack>
     </Box>
   );
 }
