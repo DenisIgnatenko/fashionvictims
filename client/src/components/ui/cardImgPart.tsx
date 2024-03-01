@@ -6,7 +6,7 @@ export default function CardImgPart(): JSX.Element {
   return (
     <Container>
       <Box flex={['none', '1']} mb={[4, 1]}>
-        <Image m={10} src={image} />
+        <Image m={1} src={image} />
       </Box>
     </Container>
   );
