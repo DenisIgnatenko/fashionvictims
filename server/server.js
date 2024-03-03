@@ -6,6 +6,7 @@ const tokensRouter = require('./routes/tokensRouter');
 const userRouter = require('./routes/userRouter');
 const studentRouter = require('./routes/studentsRouter');
 const groupRouter = require('./routes/groupRouter');
+const quizRouter = require('./routes/quizRouter');
 
 require('dotenv').config();
 
@@ -23,6 +24,7 @@ app.use('/api/student', studentRouter);
 app.use('/api/group', groupRouter);
 app.use('/api/auth', userRouter);
 app.use('/api/tokens', tokensRouter);
+app.use('/api/quizzes', quizRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

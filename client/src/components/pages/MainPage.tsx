@@ -1,8 +1,7 @@
 import { Box, Button, Flex, Image, Stack, Text, VStack } from '@chakra-ui/react';
 import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/useReduxHook';
-import { setOpenTest } from '../../redux/slices/testsSlice';
-import type { TestType } from '../../types/testsType';
+import { setOpenTest } from '../../redux/slices/quizeSlice';
 import AuthModal from '../ui/AuthModal';
 import CourseCard from '../ui/CourseCard';
 import TestDialogueModal from '../ui/TestDialogueModal';
@@ -25,7 +24,7 @@ const testItem: TestType = {
 
 export default function MainPage(): JSX.Element {
   const modal = useAppSelector((state) => state.auth.authModal);
-  const openTest = useAppSelector((state) => state.test.openTest);
+  const openTest = useAppSelector((state) => state.quiz.openTest);
   const dispatch = useAppDispatch();
   return (
     <Box>
@@ -139,7 +138,6 @@ export default function MainPage(): JSX.Element {
       {modal && <AuthModal />}
       {openTest && <TestDialogueModal />}
 
-      <CourseCard />
       <Stack spacing={5}>
         {Array(5)
           .fill(0)
