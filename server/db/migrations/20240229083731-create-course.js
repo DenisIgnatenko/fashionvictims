@@ -14,6 +14,9 @@ module.exports = {
       authorId: {
         type: Sequelize.INTEGER,
       },
+      duration: {
+        type: Sequelize.INTEGER,
+      },
       description: {
         type: Sequelize.TEXT,
       },

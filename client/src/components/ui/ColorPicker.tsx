@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
-import { Box, Button, Center, FormControl, FormLabel, Input, Popover, PopoverArrow, PopoverBody, PopoverCloseButton, PopoverContent, PopoverHeader, PopoverTrigger, SimpleGrid } from '@chakra-ui/react'
+import { Box, Button, Center, FormControl, FormLabel, Input, Popover, PopoverArrow, PopoverBody, PopoverCloseButton, PopoverContent, PopoverHeader, PopoverTrigger, SimpleGrid, Text } from '@chakra-ui/react'
+import { FaPalette } from 'react-icons/fa';
+
 
 
 export default function ColorPicker(): JSX.Element {
@@ -20,23 +22,28 @@ export default function ColorPicker(): JSX.Element {
     return (
         <Center marginTop={5}>
             <Popover variant="picker">
-                <PopoverTrigger>
-                    <Button
-                        // aria-label={color}
-                        // background={color}
-                        // height="auto"
-                        // width="auto"
-                        // padding={0}
-                        // minWidth="unset"
-                        // borderRadius={3}
-                        variant="primeVariant"
-                        background={color}
-                        marginBottom={5}
-                    >
-                        Выберите цвет курса
+            <PopoverTrigger>
+        <Button
+          background={color}
+          width="fit-content"
+          borderRadius="full"
+          padding={0}
+          marginBottom={5}
+          position="relative"
+        >
+          <Box
+            as={FaPalette}
+            color="white"
+            size="24px"
+            borderRadius="full"
+            position="absolute"
+            top="50%"
+            left="50%"
+            transform="translate(-50%, -50%)"
+          />
+        </Button>
+      </PopoverTrigger>
 
-                    </Button>
-                </PopoverTrigger>
                 <PopoverContent width="170px">
                     <PopoverArrow bg={color} />
                     <PopoverCloseButton color="white" />

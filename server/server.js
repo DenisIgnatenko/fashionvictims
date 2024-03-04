@@ -24,6 +24,7 @@ app.use('/api/group', groupRouter);
 app.use('/api/auth', userRouter);
 app.use('/api/tokens', tokensRouter);
 
+
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
