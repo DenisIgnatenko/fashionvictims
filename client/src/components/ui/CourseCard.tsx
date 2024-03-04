@@ -2,16 +2,19 @@ import React from 'react';
 import { Box, Flex } from '@chakra-ui/react';
 import CardImgPart from './cardImgPart';
 import CardContentPart from './cardContentPart';
+import {  CourseType } from '../../types/courseType';
 
 type CourseCardType = {
   index: number;
+  courseId: number;
+  course: CourseType;
 };
 
-export default function CourseCard({ index }: CourseCardType): JSX.Element {
-  const backColor = '#B9DAF9';
+export default function CourseCard({ index, courseId, course }: CourseCardType): JSX.Element {
+  //   const backColor = '#B9DAF9';
 
   return (
-    <Box backgroundColor={backColor} borderRadius={30} p={6} h="100%">
+    <Box bgColor={course.CourseStyle.bgColor} borderRadius={30} p={6} h="100%">
       <Flex
         h="100%"
         direction={['column', 'row']}
@@ -20,13 +23,13 @@ export default function CourseCard({ index }: CourseCardType): JSX.Element {
       >
         {index % 2 === 0 ? (
           <>
-            <CardImgPart />
-            <CardContentPart />
+            <CardImgPart img={course?.CourseStyle.img} />
+            <CardContentPart courseId={courseId} />
           </>
         ) : (
           <>
-            <CardContentPart />
-            <CardImgPart />
+            <CardContentPart courseId={courseId} />
+            <CardImgPart img={course.CourseStyle.img} />
           </>
         )}
       </Flex>
