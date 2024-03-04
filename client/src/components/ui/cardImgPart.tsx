@@ -1,12 +1,15 @@
 import { Box, Container, Image } from '@chakra-ui/react';
 import React from 'react';
 
-export default function CardImgPart(): JSX.Element {
-  const image = '/src/public/Group13.png';
+type CardImgPartProp = {
+  img: string;
+};
+
+export default function CardImgPart({ img }: CardImgPartProp): JSX.Element {
   return (
     <Container>
       <Box flex={['none', '1']} mb={[4, 1]}>
-        <Image m={1} src={image} />
+        <Image m={1} src={img} />
       </Box>
     </Container>
   );

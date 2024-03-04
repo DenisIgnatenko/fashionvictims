@@ -1,19 +1,20 @@
 export type CourseType = {
-    id: number;
-    title: string,
-    authorId: number,
-    description: string,
-    startDate: string,
-    price: number;
-}
-
+  id: number;
+  title: string;
+  authorId: number;
+  duration: number;
+  description: string;
+  startDate: string;
+  price: number;
+  CourseStyle: CourseStyleType;
+};
 export type CourseStyleType = {
-    bgColor: string,
-    img: string | null,
-    direction: string,
-    courseId: number,
-}
+  bgColor: string;
+  img: string;
+  direction: string;
+  courseId: number;
+};
 
 export type AllCoursesType = {
-    course: CourseType[]
-}
+  course: CourseType[];
+};
