@@ -9,7 +9,7 @@ const buttonStyles = {
             justifyContent: 'center',
             background: '#E293B6',
             _hover: {
-                background: '#E378A7', 
+                background: '#E378A7',
                 border: '2px solid #E378A7', // Новый цвет при нажатии
               },
               _active: {
@@ -26,7 +26,7 @@ const buttonStyles = {
             justifyContent: 'center',
             background:"transparent",
             _hover: {
-                background: 'rgba(226, 147, 182, 0.2)', 
+                background: 'rgba(226, 147, 182, 0.2)',
                 border: '2px solid rgba(226, 147, 182, 1)',// менее прозрачный фон при наведении
               },
               _active: {
