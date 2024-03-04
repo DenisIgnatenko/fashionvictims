@@ -1,22 +1,41 @@
-import { Box, Button, Flex, Image, Img, Stack, Text, VStack } from '@chakra-ui/react';
 import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/useReduxHook';
-import AuthModal from '../ui/AuthModal';
-import CourseCard from '../ui/CourseCard';
 import { CourseType } from '../../types/courseType';
 import { fetchCoursesActionThunk } from '../../redux/thunkActions/courseThunkActions';
+import { Box, Button, Flex, Image, Stack, Text, VStack } from '@chakra-ui/react';
+import { setOpenTest } from '../../redux/slices/testsSlice';
+import type { TestType } from '../../types/testsType';
+import AuthModal from '../ui/AuthModal';
+import CourseCard from '../ui/CourseCard';
+import TestDialogueModal from '../ui/TestDialogueModal';
 
+const testItem: TestType = {
+  id: 1,
+  name: 'Test',
+  description: 'Test description',
+  userId: 1,
+  questions: [
+    {
+      id: 1,
+      testId: 1,
+      question: 'Test question',
+      answer: 'Test answer',
+      points: 1,
+    },
+  ],
+};
 
-export default function MainPage( ): JSX.Element {
+export default function MainPage(): JSX.Element {
   const modal = useAppSelector((state) => state.auth.authModal);
   const courses = useAppSelector((state) => state.course.course);
-
 
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     void dispatch(fetchCoursesActionThunk());
   }, []);
+
+  const openTest = useAppSelector((state) => state.test.openTest);
 
   return (
     <Box>
@@ -32,7 +51,6 @@ export default function MainPage( ): JSX.Element {
           base: 'column',
           md: 'row',
         }}
-        
         borderBottomRightRadius="30px"
         borderBottomLeftRadius="30px"
       >
@@ -42,17 +60,17 @@ export default function MainPage( ): JSX.Element {
           <VStack spacing={4} align="flex-start">
             {/* <Text textStyle="heroSimpleText" width="300px"> */}
             <Text textStyle="heroSimpleText" width={{ base: '100%', md: '300px' }}>
-
               Курсы о том, как работает мода, что делает её таким мощным и влиятельным феноменом,
               как она формируется
             </Text>
-            <Button>Подробнее</Button>
-            {/* <Text textStyle="heroH3heading" mt={12}> */}
-            <Text textStyle="heroH3heading" mt={12}>Ближайший старт</Text>
-
-              {/* Ближайший старт
-            </Text> */}
-            <Text textStyle="heroSimpleText" mb={6}>20 сентября</Text>
+            <Button variant="primeVariant">Подробнее</Button>
+            <Text textStyle="heroH3heading" mt={12}>
+              Ближайший старт
+            </Text>
+            <Text textStyle="heroSimpleText">20 сентября</Text>
+            <Button variant="primeVariant" onClick={() => void dispatch(setOpenTest(testItem))}>
+              Пройти тест
+            </Button>
           </VStack>
         </VStack>
 
@@ -151,14 +169,15 @@ export default function MainPage( ): JSX.Element {
         width={{ md: '100px', xl: '180px', sm: '80px' }}
       />
     </Stack> */}
-
       </Flex>
       {modal && <AuthModal />}
+      {openTest && <TestDialogueModal />}
+
+     
       <Stack spacing={5}>
-        {courses
-          .map((course, index) => (
-            <CourseCard  key={course.id} index={index} courseId={course.id}  course={course} />
-          ))}
+        {courses.map((course, index) => (
+          <CourseCard key={course.id} index={index} courseId={course.id} course={course} />
+        ))}
       </Stack>
     </Box>
   );

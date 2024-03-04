@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import PrivateRouter from './components/HOCs/PrivateRouter';
+import AddCoursePage from './components/pages/AddCoursePage';
 import MainPage from './components/pages/MainPage';
 import ProfilePage from './components/pages/ProfilePage';
 import Root from './components/Root';
@@ -25,6 +26,7 @@ function App(): JSX.Element {
           element: <PrivateRouter isAllowed={user.status !== 'logged'} />,
           children: [{ path: '/profile', element: <ProfilePage /> }],
         },
+        { path: '/add', element: <AddCoursePage /> },
       ],
     },
   ]);

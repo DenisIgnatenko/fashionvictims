@@ -1,4 +1,4 @@
-import { ArrowLeftIcon, AtSignIcon, ChevronLeftIcon, ExternalLinkIcon, HamburgerIcon, LockIcon, NotAllowedIcon, UnlockIcon } from '@chakra-ui/icons';
+import { HamburgerIcon, NotAllowedIcon, UnlockIcon } from '@chakra-ui/icons';
 import {
   Avatar,
   Box,
@@ -10,25 +10,26 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
-  TagLeftIcon,
   Text,
-  WrapItem,
   useBreakpointValue,
+  WrapItem,
 } from '@chakra-ui/react';
 import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/useReduxHook';
 import { setModal } from '../../redux/slices/authSlice';
 import { logOutThunk } from '../../redux/thunkActions/authThunkActions';
-
+import AuthModal from './AuthModal';
 export default function NavBar(): JSX.Element {
   const isMobile = useBreakpointValue({ base: true, md: false });
+  const modal = useAppSelector((state) => state.auth.authModal);
   const user = useAppSelector((state) => state.auth.user)
   const dispatch = useAppDispatch()
   return (
     <Flex
       borderTopRadius="30px"
       width="full"
-      height="74px"
+      mt={4}
+      height="100px"
       maxWidth="100%"
       background="#4D6877"
       px={4}
@@ -55,11 +56,7 @@ export default function NavBar(): JSX.Element {
           </Menu>
         ) : (
           <Flex justify="center" align="center" height="100%">
-            {(user.status === 'logged' &&
-            <Text variant="">
-              Привет,{`${user.name}`}
-            </Text>
-            )}
+            {user.status === 'logged' && <Text variant="">Привет,{`${user.name}`}</Text>}
             <Center mx="auto">
               {' '}
               {/* Центрируем ссылки */}
@@ -86,27 +83,31 @@ export default function NavBar(): JSX.Element {
               variant="ghost"
               color="whiteAlpha.900"
             /> */}
-            {user.status === 'logged' ?
+            {user.status === 'logged' ? (
               <>
-                <IconButton onClick={() => void dispatch(logOutThunk())}
+                <IconButton
+                  onClick={() => void dispatch(logOutThunk())}
                   aria-label="Logout"
                   icon={<NotAllowedIcon />}
                   variant="ghost"
                   color="whiteAlpha.900"
                 />
                 <WrapItem>
-                  <Avatar size='md' name={user.name} src={user.img} />
+                  <Avatar size="md" name={user.name} src={user.img} />
                 </WrapItem>
-              </> :
-              <IconButton onClick={() => dispatch(setModal(true))}
+              </>
+            ) : (
+              <IconButton
+                onClick={() => dispatch(setModal(true))}
                 aria-label="Register"
                 icon={<UnlockIcon />}
                 variant="ghost"
                 color="whiteAlpha.900"
               />
-            }
+            )}
           </Flex>
         )}
+              {modal && <AuthModal />}
       </Box>
     </Flex>
   );
