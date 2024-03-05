@@ -1,24 +1,21 @@
-import React, { useEffect } from 'react';
-import { Box, Button, Flex, Image, Stack, Text, VStack } from '@chakra-ui/react';
-import { useAppDispatch, useAppSelector } from '../../hooks/useReduxHook';
-import { fetchCoursesActionThunk } from '../../redux/thunkActions/courseThunkActions';
-import { setOpenTest } from '../../redux/slices/quizeSlice';
-import type { QuizType } from '../../types/quizType';
+import React from 'react';
+import { Box, Button, Flex, Image, Text, VStack } from '@chakra-ui/react';
+import { useAppSelector } from '../../hooks/useReduxHook';
 import AuthModal from '../ui/AuthModal';
-import CourseCard from '../ui/CourseCard';
 import TestDialogueModal from '../ui/TestDialogueModal';
 import StaticContent from '../ui/staticContent';
 import TeacherCard from '../ui/TeacherCard';
+import CoursesPage from './CoursesPage';
 
 export default function MainPage(): JSX.Element {
   const modal = useAppSelector((state) => state.auth.authModal);
-  const courses = useAppSelector((state) => state.courses.course);
+  // const courses = useAppSelector((state) => state.courses.course);
   const openTest = useAppSelector((state) => state.quiz.openTest);
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    void dispatch(fetchCoursesActionThunk());
-  }, []);
+  // useEffect(() => {
+  //   void dispatch(fetchCoursesActionThunk());
+  // }, []);
 
   return (
     <Box>
@@ -65,7 +62,7 @@ export default function MainPage(): JSX.Element {
               alt="Character"
               position="relative"
               top={['auto', '20']}
-              right={{ base: 'auto', md:'5'}}
+              right={{ base: 'auto', md:'-65'}}
               width={{ base: 500, md: 550, xl: 650, sm: 330 }}
             />
           </Box>
@@ -89,7 +86,7 @@ export default function MainPage(): JSX.Element {
               zIndex="1"
               bottom="500"
               right="5"
-              width={{ md: 100, xl: 120, sm: 80 }}
+              width={{ md: 100, xl: 120, sm: '' }}
             />
           
         </VStack>
@@ -136,13 +133,7 @@ export default function MainPage(): JSX.Element {
       {openTest && <TestDialogueModal />}
 
       <StaticContent/>
-
-     
-      <Stack spacing={5}>
-        {courses.map((course, index) => (
-          <CourseCard key={course.id} index={index} courseId={course.id} course={course} />
-        ))}
-      </Stack>
+      <CoursesPage />
       <TeacherCard/>
     </Box>
   );

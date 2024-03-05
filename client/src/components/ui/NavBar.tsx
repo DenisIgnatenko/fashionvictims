@@ -13,17 +13,29 @@ import {
   useBreakpointValue,
   WrapItem,
 } from '@chakra-ui/react';
+import { Link as ScrollLink } from 'react-scroll';
 import React from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/useReduxHook';
 import { setModal } from '../../redux/slices/authSlice';
 import { logOutThunk } from '../../redux/thunkActions/authThunkActions';
 import AuthModal from './AuthModal';
+import scrollLinkStyles from '../../utils/scrollLinkStyles';
+
+
 
 export default function NavBar(): JSX.Element {
   const isMobile = useBreakpointValue({ base: true, md: false });
   const modal = useAppSelector((state) => state.auth.authModal);
   const user = useAppSelector((state) => state.auth.user);
   const dispatch = useAppDispatch();
+
+ 
+    const [hover, setHover] = React.useState(false);
+  
+    const style = {
+      ...scrollLinkStyles.baseStyle,
+      ...(hover ? scrollLinkStyles.variants.underlineHover._hover : {}),
+    }
   return (
     <Flex
       borderTopRadius="30px"
@@ -38,6 +50,7 @@ export default function NavBar(): JSX.Element {
         {isMobile ? (
           <Menu>
             <MenuButton
+              top={9}
               as={IconButton}
               icon={<HamburgerIcon />}
               variant="outline"
@@ -46,11 +59,33 @@ export default function NavBar(): JSX.Element {
             />
             <MenuList>
               <MenuList>
-                <MenuItem>Что это такое?</MenuItem>
-                <MenuItem>Наши курсы</MenuItem>
-                <MenuItem>Материалы</MenuItem>
-                <MenuItem>Преподаватели</MenuItem>
-                <MenuItem>Контакты</MenuItem>
+                <MenuItem>
+                  <Link variant="burger" href="#about">
+                    Что это такое?
+                  </Link>
+                </MenuItem>
+                <MenuItem>
+                  <Link variant="burger" href="#teachers">
+                    Преподаватели
+                  </Link>
+                </MenuItem>
+                <MenuItem>
+                  <Link variant="burger" href="#courses">
+                    Наши курсы
+                  </Link>
+                </MenuItem>
+                
+               
+                <MenuItem>
+                  <Link variant="burger" href="#">
+                    Материалы
+                  </Link>
+                </MenuItem>
+                <MenuItem>
+                  <Link variant="burger" href="#contacts">
+                    Контакты
+                  </Link>
+                </MenuItem>
               </MenuList>
             </MenuList>
           </Menu>
@@ -59,19 +94,26 @@ export default function NavBar(): JSX.Element {
             <Center mx="auto">
               {' '}
               {/* Центрируем ссылки */}
-              <Link variant="underlineHover" href="/">
-                Что это такое?
-              </Link>
-              <Link variant="underlineHover" href="/">
+              <ScrollLink
+      style={style}
+      to="about"
+      smooth={true}
+      duration={500}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+    >
+      Что это такое?
+    </ScrollLink>
+              <Link variant="underlineHover" href="#courses">
                 Наши курсы
               </Link>
-              <Link variant="underlineHover" href="/">
+              <Link variant="underlineHover" href="#">
                 Материалы
               </Link>
-              <Link variant="underlineHover" href="/">
+              <Link variant="underlineHover" href="#teachers">
                 Преподаватели
               </Link>
-              <Link variant="underlineHover" href="/">
+              <Link variant="underlineHover" href="#">
                 Контакты
               </Link>
             </Center>
