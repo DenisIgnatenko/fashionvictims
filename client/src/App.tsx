@@ -7,11 +7,7 @@ import ProfilePage from './components/pages/ProfilePage';
 import Root from './components/Root';
 import { useAppDispatch, useAppSelector } from './hooks/useReduxHook';
 import { checkTokenThunk } from './redux/thunkActions/authThunkActions';
-<<<<<<< HEAD
-import AddCoursePage from './components/pages/AddCoursePage';
 
-=======
->>>>>>> dev
 
 function App(): JSX.Element {
   const dispatch = useAppDispatch();

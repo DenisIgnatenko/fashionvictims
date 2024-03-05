@@ -19,6 +19,7 @@ module.exports = (sequelize, DataTypes) => {
     courseId: DataTypes.INTEGER,
     order: DataTypes.INTEGER,
     videoURL: DataTypes.STRING,
+    article: DataTypes.TEXT,
   }, {
     sequelize,
     modelName: 'Module',
