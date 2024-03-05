@@ -1,36 +1,26 @@
 import { Box, Button, Flex, Image, Stack, Text, VStack } from '@chakra-ui/react';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/useReduxHook';
-import { setOpenTest } from '../../redux/slices/quizeSlice';
+import { fetchCoursesActionThunk } from '../../redux/thunkActions/courseThunkActions';
 import AuthModal from '../ui/AuthModal';
 import CourseCard from '../ui/CourseCard';
 import TestDialogueModal from '../ui/TestDialogueModal';
 
-const testItem: TestType = {
-  id: 1,
-  name: 'Test',
-  description: 'Test description',
-  userId: 1,
-  questions: [
-    {
-      id: 1,
-      testId: 1,
-      question: 'Test question',
-      answer: 'Test answer',
-      points: 1,
-    },
-  ],
-};
-
 export default function MainPage(): JSX.Element {
   const modal = useAppSelector((state) => state.auth.authModal);
+  const courses = useAppSelector((state) => state.courses.course);
   const openTest = useAppSelector((state) => state.quiz.openTest);
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    void dispatch(fetchCoursesActionThunk());
+  }, []);
+
   return (
     <Box>
       <Flex
         maxWidth="100%"
-        height="500"
+        minH="500"
         p={4}
         bg="#4D6877"
         alignItems="flex-start"
@@ -46,7 +36,8 @@ export default function MainPage(): JSX.Element {
         <VStack spacing={2} ml={{ base: 0, md: 8 }} mt={{ base: 8, md: 0 }} alignItems="left">
           <Text textStyle="customHeading">Жертвы (теории) Моды</Text>
           <VStack spacing={4} align="flex-start">
-            <Text textStyle="heroSimpleText" width="300px">
+            {/* <Text textStyle="heroSimpleText" width="300px"> */}
+            <Text textStyle="heroSimpleText" width={{ base: '100%', md: '300px' }}>
               Курсы о том, как работает мода, что делает её таким мощным и влиятельным феноменом,
               как она формируется
             </Text>
@@ -55,9 +46,6 @@ export default function MainPage(): JSX.Element {
               Ближайший старт
             </Text>
             <Text textStyle="heroSimpleText">20 сентября</Text>
-            <Button variant="primeVariant" onClick={() => void dispatch(setOpenTest(testItem))}>
-              Пройти тест
-            </Button>
           </VStack>
         </VStack>
 
@@ -138,11 +126,9 @@ export default function MainPage(): JSX.Element {
       {openTest && <TestDialogueModal />}
 
       <Stack spacing={5}>
-        {Array(5)
-          .fill(0)
-          .map((el, index) => (
-            <CourseCard index={index} />
-          ))}
+        {courses.map((course, index) => (
+          <CourseCard key={course.id} index={index} courseId={course.id} course={course} />
+        ))}
       </Stack>
     </Box>
   );

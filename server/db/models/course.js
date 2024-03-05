@@ -12,11 +12,12 @@ module.exports = (sequelize, DataTypes) => {
 
   Course.init(
     {
-      title: DataTypes.STRING,
       authorId: DataTypes.INTEGER,
       description: DataTypes.TEXT,
-      startDate: DataTypes.DATE,
+      duration: DataTypes.INTEGER,
       price: DataTypes.INTEGER,
+      startDate: DataTypes.DATE,
+      title: DataTypes.STRING,
     },
     {
       sequelize,

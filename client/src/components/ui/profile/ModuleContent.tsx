@@ -1,6 +1,6 @@
 import { Box, Heading, Text } from '@chakra-ui/react';
 import React from 'react';
-import type { ModuleType } from '../../../types/courseTypes';
+import type { ModuleType } from '../../../types/courseType';
 import VideoPlayer from './VideoPlayer';
 
 export default function ModuleContent(module: ModuleType): JSX.Element {

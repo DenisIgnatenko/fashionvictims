@@ -1,11 +1,13 @@
-import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import type { CourseType } from '../../types/courseTypes';
-import { getPurchasedCourses } from '../thunkActions/courseThunkActions';
+import type { PayloadAction } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
+import type { AllCoursesType, CourseType } from '../../types/courseType';
+import { fetchCoursesActionThunk, getPurchasedCourses } from '../thunkActions/courseThunkActions';
 
-const initialState = {
+const initialState: AllCoursesType = {
   purchasedCourses: [],
   loading: false,
   error: null,
+  course: [],
 };
 
 const courseSlice = createSlice({
@@ -28,6 +30,9 @@ const courseSlice = createSlice({
     builder.addCase(getPurchasedCourses.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload as string;
+    });
+    builder.addCase(fetchCoursesActionThunk.fulfilled, (state, action) => {
+      state.course = action.payload;
     });
   },
 });

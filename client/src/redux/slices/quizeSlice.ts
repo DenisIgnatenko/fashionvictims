@@ -24,22 +24,21 @@ const quizeSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder
-      .addCase(getQuizzesByModuleId.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(getQuizzesByModuleId.fulfilled, (state, action: PayloadAction<QuizType[]>) => {
-        state.questions = action.payload;
-        state.loading = false;
-      })
-      .addCase(getQuizzesByModuleId.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload as string;
-      })
-      .addCase(saveQuizResult.fulfilled, (state, action: PayloadAction<QuizType>) => {})
-      .addCase(saveQuizResult.rejected, (state, action) => {})
-      .addCase(saveQuizResult.pending, (state) => {});
+    builder.addCase(getQuizzesByModuleId.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+    builder.addCase(getQuizzesByModuleId.fulfilled, (state, action: PayloadAction<QuizType[]>) => {
+      state.questions = action.payload;
+      state.loading = false;
+    });
+    builder.addCase(getQuizzesByModuleId.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload as string;
+    });
+    builder.addCase(saveQuizResult.fulfilled, (state, action) => {});
+    builder.addCase(saveQuizResult.rejected, (state, action): void => {});
+    builder.addCase(saveQuizResult.pending, (state) => {});
   },
 });
 

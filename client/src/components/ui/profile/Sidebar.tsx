@@ -17,8 +17,10 @@ export default function Sidebar({ onSelectModule }): JSX.Element {
   const purchasedCourses = useAppSelector((state) => state.courses.purchasedCourses);
 
   useEffect(() => {
-    void dispatch(getPurchasedCourses(user?.id));
-  }, [dispatch, user?.id]);
+    if (user.status === 'logged') {
+      void dispatch(getPurchasedCourses(user.id));
+    }
+  }, [dispatch, user]);
 
   return (
     <Accordion allowMultiple>
