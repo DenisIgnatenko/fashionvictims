@@ -1,7 +1,9 @@
-import { Box, Button, Flex, Image, Stack, Text, VStack } from '@chakra-ui/react';
 import React, { useEffect } from 'react';
+import { Box, Button, Flex, Image, Stack, Text, VStack } from '@chakra-ui/react';
 import { useAppDispatch, useAppSelector } from '../../hooks/useReduxHook';
 import { fetchCoursesActionThunk } from '../../redux/thunkActions/courseThunkActions';
+import { setOpenTest } from '../../redux/slices/quizeSlice';
+import type { QuizType } from '../../types/quizType';
 import AuthModal from '../ui/AuthModal';
 import CourseCard from '../ui/CourseCard';
 import TestDialogueModal from '../ui/TestDialogueModal';

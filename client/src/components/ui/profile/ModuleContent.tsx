@@ -13,7 +13,7 @@ export default function ModuleContent(module: ModuleType): JSX.Element {
 
   return (
     <Box flex="1" p={5}>
-      <Heading size="lg" textStyle={'customHeading'} mb={5}>
+      <Heading size="lg" textStyle="customHeading" mb={5}>
         {module.name}
       </Heading>
       <VideoPlayer videoUrl={module.videoURL} />

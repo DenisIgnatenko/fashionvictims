@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import type { AddCourseType, CourseType } from '../../types/courseType';
 import courseService from '../../services/courseService';
-import type { CourseType } from '../../types/courseType';
 
 export const getPurchasedCourses = createAsyncThunk(
   'course/getPurchasedCourses',
@@ -8,7 +8,7 @@ export const getPurchasedCourses = createAsyncThunk(
     console.log('getPurchasedCourses: userId:', userId);
     try {
       const response = await courseService.getPurchasedCourses(userId);
-      return response.data;
+      return response;
     } catch (error) {
       console.log(error);
     }
@@ -19,3 +19,5 @@ export const fetchCoursesActionThunk = createAsyncThunk<CourseType[]>(
   'courses/fetchCourses',
   async () => courseService.getCourses(),
 );
+
+export const addCourseThunk = createAsyncThunk<CourseType, FormData>('addCourse', async (data) => courseService.addCourse(data))

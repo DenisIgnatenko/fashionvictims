@@ -16,7 +16,8 @@ import {
     Box,
     MenuList,
     HStack,
-    Link
+    Link,
+    Flex
 } from '@chakra-ui/react'
 import { useAppDispatch } from '../../hooks/useReduxHook'
 import { signInThunk, signUpThunk } from '../../redux/thunkActions/authThunkActions'
@@ -75,7 +76,9 @@ export default function AuthModal(): JSX.Element {
                                     Нет аккаунта? Зарегистрироваться
                                 </Text>}
                             <Box h="38px" />
-                            <Button position='absolute' bottom='45px' type='submit'>{register ? 'Зарегистрироваться' : 'Войти'}</Button>
+                            <Flex justifyContent="center">
+                            <Button variant='primeVariant' position='absolute' bottom='45px' type='submit'>{register ? 'Зарегистрироваться' : 'Войти'}</Button>
+                            </Flex>
                         </Box>
                     </ModalBody>
                 </ModalContent>
