@@ -23,10 +23,11 @@ function App(): JSX.Element {
       children: [
         { path: '/', element: <MainPage /> },
         {
-          element: <PrivateRouter isAllowed={user.status !== 'logged'} />,
+          element: <PrivateRouter isAllowed={user.status === 'logged'} />,
           children: [{ path: '/profile', element: <ProfilePage /> }],
         },
         { path: '/add', element: <AddCoursePage /> },
+        { path: '/profile1', element: <ProfilePage /> },
       ],
     },
   ]);

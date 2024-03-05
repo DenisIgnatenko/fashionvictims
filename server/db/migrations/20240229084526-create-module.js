@@ -21,6 +21,9 @@ module.exports = {
       videoURL: {
         type: Sequelize.STRING,
       },
+      article: {
+        type: Sequelize.TEXT,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

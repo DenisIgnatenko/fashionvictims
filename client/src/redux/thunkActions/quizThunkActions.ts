@@ -1,6 +1,16 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import QuizService from '../../services/quizService';
 
+export type SaveQuizResultArgType = {
+  userId: number;
+  moduleId: number;
+  score: number;
+};
+
+export type QuizResultResponseType = {
+  success: boolean;
+};
+
 export const getQuizzesByModuleId = createAsyncThunk(
   'quiz/getByModuleId',
   async (moduleId: number, { rejectWithValue }) => {
@@ -15,10 +25,11 @@ export const getQuizzesByModuleId = createAsyncThunk(
 
 export const saveQuizResult = createAsyncThunk(
   'quiz/saveResult',
-  async ({ userId, moduleId, score }, { rejectWithValue }) => {
+  async (args: SaveQuizResultArgType, { rejectWithValue }) => {
     try {
+      const { userId, moduleId, score } = args;
       const response = await QuizService.saveQuizResult(userId, moduleId, score);
-      return response.data;
+      return response.data as QuizResultResponseType;
     } catch (error) {
       return rejectWithValue(error.response.data);
     }

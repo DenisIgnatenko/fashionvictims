@@ -43,7 +43,6 @@ export default function MainPage(): JSX.Element {
         borderBottomRightRadius="30px"
         borderBottomLeftRadius="30px"
       >
-        {/* Описание курса и кнопка */}
         <VStack spacing={2} ml={{ base: 0, md: 8 }} mt={{ base: 8, md: 0 }} alignItems="left">
           <Text textStyle="customHeading">Жертвы (теории) Моды</Text>
           <VStack spacing={4} align="flex-start">

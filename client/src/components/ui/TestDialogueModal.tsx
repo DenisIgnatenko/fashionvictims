@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Heading,
   ListItem,
@@ -7,7 +8,6 @@ import {
   ModalCloseButton,
   ModalContent,
   ModalFooter,
-  ModalHeader,
   ModalOverlay,
   Text,
   UnorderedList,
@@ -30,7 +30,7 @@ const listItemStyle = {
   borderRadius: '16px',
   borderColor: 'gray.200',
   paddingLeft: '30px',
-  width: '100%',
+  width: '90%',
   boxSizing: 'border-box',
 };
 
@@ -41,12 +41,12 @@ const unorderedListStyle = {
   width: '100%',
 };
 
-export default function TestDialogueModal(): JSX.Element {
+export default function TestDialogueModal(): JSX.Element | null {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [question, setQuestion] = useState<QuizType | null>(null);
   const [choiceMade, setChoiceMade] = useState(false);
-  const [selectedAnswerIndex, setSelectedAnswerIndex] = useState(null);
-  const [correctAsnwerCount, setCorrectAnswerCount] = useState(0);
+  const [selectedAnswerIndex, setSelectedAnswerIndex] = useState<number | null>(null);
+  const [correctAnswerCount, setCorrectAnswerCount] = useState(0);
   const [quizFinished, setQuizFinished] = useState(false);
   const [comment, setComment] = useState<string>('');
   const questions = useAppSelector((state) => state.quiz.questions);
@@ -58,7 +58,7 @@ export default function TestDialogueModal(): JSX.Element {
   let isLastQuestion = currentQuestionIndex + 1 === questions.length;
 
   useEffect(() => {
-    void dispatch(getQuizzesByModuleId(1));
+    void dispatch(getQuizzesByModuleId(2));
   }, [dispatch]);
 
   useEffect(() => {
@@ -96,18 +96,20 @@ export default function TestDialogueModal(): JSX.Element {
     } else {
       console.log('Квиз завершен');
 
-      const percentageOfCorrectAnswers = (correctAsnwerCount / questions.length) * 100;
+      const percentageOfCorrectAnswers = (correctAnswerCount / questions.length) * 100;
       const isPassed = percentageOfCorrectAnswers >= 70;
 
       if (isPassed) {
         console.log('Тест пройден');
-        void dispatch(
-          saveQuizResult({
-            userId: user.id,
-            moduleId: quiz.moduleId,
-            score: percentageOfCorrectAnswers,
-          }),
-        );
+        if (user.status === 'logged') {
+          void dispatch(
+            saveQuizResult({
+              userId: user.id,
+              moduleId: quiz.questions[currentQuestionIndex].moduleId,
+              score: percentageOfCorrectAnswers,
+            }),
+          );
+        }
       }
       setQuizFinished(true);
     }
@@ -120,8 +122,8 @@ export default function TestDialogueModal(): JSX.Element {
   return (
     <Modal isOpen onClose={onClose} isCentered motionPreset="slideInBottom" size="xl">
       <ModalOverlay bg="blackAlpha.300" backdropFilter="blur(10px) hue-rotate(10deg)" />
-      <ModalContent>
-        <ModalHeader>Пройдем тестированиe</ModalHeader>
+      <ModalContent borderRadius="20px">
+        {/* <ModalHeader>Пройдем тестированиe</ModalHeader> */}
         <ModalCloseButton />
         <ModalBody>
           {quizFinished ? (
@@ -130,20 +132,24 @@ export default function TestDialogueModal(): JSX.Element {
                 Результаты квиза
               </Heading>
               <Text fontSize="md">
-                Правильных ответов: {correctAsnwerCount} из {questions.length}
+                Правильных ответов: {correctAnswerCount} из {questions.length}
+              </Text>
+              <Text>
+                Ваш результат: {Math.round((correctAnswerCount / questions.length) * 100)}%
               </Text>
               <Button variant="primeVariant" onClick={onClose}>
                 Закрыть
               </Button>
             </VStack>
           ) : (
-            <VStack spacing={3}>
-              <Heading as="h3" size="md">
+            <VStack spacing={3} align="center">
+              <Heading as="h2" size="md" m={6}>
                 {currentQuestionIndex + 1}. {question?.question}
+                <Box height="2px" bg="#E293B6" width="100%" mt={5} />
               </Heading>
               <UnorderedList style={unorderedListStyle}>
                 {question?.options.map((option, index) => (
-                  <VStack key={option.id} align="stretch">
+                  <VStack key={option.id} align="stretch" alignItems="center">
                     <ListItem
                       sx={{
                         ...listItemStyle,
@@ -164,8 +170,8 @@ export default function TestDialogueModal(): JSX.Element {
                       {option.variant}
                     </ListItem>
                     {choiceMade && selectedAnswerIndex === index && (
-                      <Text fontSize="mb" mb={4} padding="20px" borderStyle="dashed">
-                        {option.comment}
+                      <Text fontSize="mb" mb={4} ml={30} mr={30}>
+                        {comment}
                       </Text>
                     )}
                   </VStack>
