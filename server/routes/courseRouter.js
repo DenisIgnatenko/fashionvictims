@@ -20,7 +20,8 @@ courseRouter.post('/courses', upload.single('img'), async (req, res) => {
       title, price, description, duration, startDate, authorId, bgColor,
     } = req.body;
 
-    if (!(title && price && description && duration && startDate && authorId)) res.sendStatus(401);
+    // eslint-disable-next-line max-len
+    if (!(title && price && description && duration && startDate && authorId)) return res.sendStatus(401);
     const created = await Course.create({
       title, price, description, duration, startDate, authorId,
     });
@@ -31,10 +32,10 @@ courseRouter.post('/courses', upload.single('img'), async (req, res) => {
       courseId: created.id,
     });
     console.log(req.body);
-    res.json({ newStyle, created });
+    return res.json({ newStyle, created });
   } catch (error) {
     console.log(error.message);
-    res.status(500).json({ message: error.message });
+    return res.status(500).json({ message: error.message });
   }
 });
 
