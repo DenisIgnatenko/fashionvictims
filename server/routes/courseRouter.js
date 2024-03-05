@@ -16,6 +16,8 @@ courseRouter.get('/users/:id/purchasedcourses', async (req, res) => {
           include: [
             {
               model: Module,
+              as: 'Modules',
+              order: ['order', 'ASC'],
             },
           ],
         },

@@ -1,6 +1,7 @@
 import { Box, Button, Flex, Image, Stack, Text, VStack } from '@chakra-ui/react';
 import React, { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/useReduxHook';
+import { setOpenTest } from '../../redux/slices/quizeSlice';
 import { fetchCoursesActionThunk } from '../../redux/thunkActions/courseThunkActions';
 import AuthModal from '../ui/AuthModal';
 import CourseCard from '../ui/CourseCard';
@@ -46,6 +47,9 @@ export default function MainPage(): JSX.Element {
               Ближайший старт
             </Text>
             <Text textStyle="heroSimpleText">20 сентября</Text>
+            <Button variant="primeVariant" onClick={() => void dispatch(setOpenTest(true))}>
+              Пройти тест
+            </Button>
           </VStack>
         </VStack>
 

@@ -16,6 +16,7 @@ export type QuizOptionType = {
 export type QuizStateType = {
   questions: QuizType[];
   selectedQuiz: QuizType | null;
+  quizResults: QuizResultType[] | null;
   error: string | null;
   loading: boolean;
   openTest: boolean;

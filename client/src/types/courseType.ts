@@ -21,6 +21,7 @@ export type AllCoursesType = {
   purchasedCourses: CourseType[];
   loading: boolean;
   error: string | null;
+  availableModules: Record<number, boolean>;
 };
 
 export type ModuleType = {
