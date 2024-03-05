@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -20,6 +21,9 @@ module.exports = {
       },
       videoURL: {
         type: Sequelize.STRING,
+      },
+      article: {
+        type: Sequelize.TEXT,
       },
       createdAt: {
         allowNull: false,

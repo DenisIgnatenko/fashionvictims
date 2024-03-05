@@ -1,42 +1,24 @@
 import React, { useEffect } from 'react';
+import { Box, Button, Flex, Image, Stack, Text, VStack } from '@chakra-ui/react';
 import { useAppDispatch, useAppSelector } from '../../hooks/useReduxHook';
 import { fetchCoursesActionThunk } from '../../redux/thunkActions/courseThunkActions';
-import { Box, Button, Flex, Image, Stack, Text, VStack } from '@chakra-ui/react';
-import { setOpenTest } from '../../redux/slices/testsSlice';
-import type { TestType } from '../../types/testsType';
+import { setOpenTest } from '../../redux/slices/quizeSlice';
+import type { QuizType } from '../../types/quizType';
 import AuthModal from '../ui/AuthModal';
 import CourseCard from '../ui/CourseCard';
 import TestDialogueModal from '../ui/TestDialogueModal';
 import StaticContent from '../ui/staticContent';
 import TeacherCard from '../ui/TeacherCard';
 
-const testItem: TestType = {
-  id: 1,
-  name: 'Test',
-  description: 'Test description',
-  userId: 1,
-  questions: [
-    {
-      id: 1,
-      testId: 1,
-      question: 'Test question',
-      answer: 'Test answer',
-      points: 1,
-    },
-  ],
-};
-
 export default function MainPage(): JSX.Element {
   const modal = useAppSelector((state) => state.auth.authModal);
-  const courses = useAppSelector((state) => state.course.course);
-
+  const courses = useAppSelector((state) => state.courses.course);
+  const openTest = useAppSelector((state) => state.quiz.openTest);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     void dispatch(fetchCoursesActionThunk());
   }, []);
-
-  const openTest = useAppSelector((state) => state.test.openTest);
 
   return (
     <Box>
@@ -69,9 +51,6 @@ export default function MainPage(): JSX.Element {
               Ближайший старт
             </Text>
             <Text textStyle="heroSimpleText">20 сентября</Text>
-            <Button variant="primeVariant" onClick={() => void dispatch(setOpenTest(testItem))}>
-              Пройти тест
-            </Button>
           </VStack>
         <VStack
           spacing={4}

@@ -1,8 +1,8 @@
 import { extendTheme } from '@chakra-ui/react';
 import '@fontsource/open-sans';
 import '@fontsource/montserrat';
-import linkStyles from './linkStyles';
 import buttonStyles from './buttonStyles';
+import linkStyles from './linkStyles';
 
 const theme = extendTheme({
   fonts: {
@@ -82,7 +82,10 @@ const theme = extendTheme({
     },
     Button: {
       ...buttonStyles,
-    }
+    },
+    // ListItem: {
+    //   baseStyle: CustomListItemStyle,
+    // },
   },
 });
 

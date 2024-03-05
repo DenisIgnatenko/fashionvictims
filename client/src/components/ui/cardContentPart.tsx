@@ -9,7 +9,7 @@ type CardContentProps = {
 };
 
 export default function CardContentPart({ courseId }: CardContentProps): JSX.Element {
-  const courses = useAppSelector((state) => state.course.course);
+  const courses = useAppSelector((state) => state.courses.course);
 
   const oneCours = courses.find((el) => el.id === courseId);
 
@@ -21,7 +21,7 @@ export default function CardContentPart({ courseId }: CardContentProps): JSX.Ele
 
 
   return (
-    <>
+    
       <Container justifyContent={'center'} m={10}>
         <VStack flex="2" spacing={8} align={["center","stretch"]}>
           <Text textStyle={['smallTitleHeading','titleHeading']}>{oneCours.title}</Text>
@@ -56,6 +56,6 @@ export default function CardContentPart({ courseId }: CardContentProps): JSX.Ele
           </VStack>
         </VStack>
       </Container>
-    </>
+      
   );
 }

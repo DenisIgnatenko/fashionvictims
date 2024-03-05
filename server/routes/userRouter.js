@@ -9,7 +9,7 @@ const router = Router();
 
 router.post('/signup', async (req, res) => {
   const { name, email, password } = req.body;
-  console.log(req.body)
+  console.log(req.body);
 
   if (name && email && password) {
     try {
@@ -77,4 +77,6 @@ router.get('/check', verifyAccessToken, (req, res) => {
   res.json({ user: res.locals.user, accessToken: res.locals.accessToken });
 });
 
+
+router.get('/')
 module.exports = router;
