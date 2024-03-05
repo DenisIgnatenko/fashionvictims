@@ -9,7 +9,7 @@ const router = Router();
 
 router.post('/signup', async (req, res) => {
   const { name, email, password } = req.body;
-  console.log(req.body)
+  console.log(req.body);
 
   if (name && email && password) {
     try {

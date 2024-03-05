@@ -33,7 +33,7 @@ export default function Sidebar({ onSelectModule }: SidebarPropsType): JSX.Eleme
   }, [dispatch, user]);
 
   useEffect(() => {
-    void dispatch(getQuizResultsByUserId(user.id));
+    if (user.status === 'logged') void dispatch(getQuizResultsByUserId(user.id));
   }, [dispatch, user]);
 
   useEffect(() => {
@@ -51,9 +51,8 @@ export default function Sidebar({ onSelectModule }: SidebarPropsType): JSX.Eleme
             result.score >= 80 && course.modules.some((module) => module.id === result.moduleId),
         )
         .map((result) => course.modules.find((module) => module.id === result.moduleId))
-        .sort((a, b) => b.order - a.order); // Сортировка по убыванию order
+        .sort((a, b) => b.order - a.order);
 
-      // Если есть успешно пройденные модули, делаем следующий модуль доступным
       if (passedModules.length > 0) {
         const nextModuleOrder = passedModules[0].order + 1;
         const nextModule = course.modules.find((module) => module.order === nextModuleOrder);
@@ -63,7 +62,6 @@ export default function Sidebar({ onSelectModule }: SidebarPropsType): JSX.Eleme
       }
     });
 
-    // Обновляем состояние доступных модулей
     dispatch(setAvailableModules(newAvailableModules));
   }, [quizResults, purchasedCourses, dispatch]);
 

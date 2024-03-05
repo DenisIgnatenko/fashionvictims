@@ -19,6 +19,9 @@ const linkStyles = {
         borderBottomColor: '#E293B6',
       },
     },
+    burger: {
+      color: '#425056'
+    },
   },
 };
 

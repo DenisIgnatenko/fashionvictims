@@ -7,6 +7,11 @@ import ProfilePage from './components/pages/ProfilePage';
 import Root from './components/Root';
 import { useAppDispatch, useAppSelector } from './hooks/useReduxHook';
 import { checkTokenThunk } from './redux/thunkActions/authThunkActions';
+import TeacherCard from './components/ui/TeacherCard';
+import CourseCard from './components/ui/CourseCard';
+import CoursesPage from './components/pages/CoursesPage';
+import AddModulePage from './components/pages/AddModulePage';
+
 
 function App(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -28,6 +33,7 @@ function App(): JSX.Element {
         },
         { path: '/add', element: <AddCoursePage /> },
         { path: '/profile1', element: <ProfilePage /> },
+        { path: '/course/:id/module', element: <AddModulePage /> },
       ],
     },
   ]);

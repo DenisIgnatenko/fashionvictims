@@ -11,10 +11,9 @@ type CourseCardType = {
 };
 
 export default function CourseCard({ index, courseId, course }: CourseCardType): JSX.Element {
-  //   const backColor = '#B9DAF9';
 
   return (
-    <Box bgColor={course.CourseStyle.bgColor} borderRadius={30} p={6} h="100%">
+    <Box bgColor={course.CourseStyle?.bgColor} borderRadius={30} p={6} h="100%">
       <Flex
         h="100%"
         direction={['column', 'row']}
