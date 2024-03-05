@@ -6,7 +6,7 @@ export type CourseType = {
   description: string;
   startDate: string;
   price: number;
-  CourseStyle?: CourseStyleType;
+  CourseStyle: CourseStyleType;
   modules?: ModuleType[];
 };
 
