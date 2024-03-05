@@ -1,42 +1,42 @@
+'use strict';
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Modules', {
+    await queryInterface.createTable('QuizResults', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
       },
-      name: {
-        type: Sequelize.STRING,
-      },
-      courseId: {
+      userId: {
         type: Sequelize.INTEGER,
-        references: { model: 'Courses' },
+        references: {
+          model: 'Users',
+          key: 'id',
+        },
       },
-      order: {
+      moduleId: {
         type: Sequelize.INTEGER,
+        references: {
+          model: 'Modules',
+          key: 'id',
+        },
       },
-      videoURL: {
-        type: Sequelize.STRING,
-      },
-      article: {
-        type: Sequelize.TEXT,
+      score: {
+        type: Sequelize.INTEGER,
       },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.fn('now'),
       },
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.fn('now'),
       },
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Modules');
+    await queryInterface.dropTable('QuizResults');
   },
 };

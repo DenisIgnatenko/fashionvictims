@@ -4,8 +4,8 @@ const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const tokensRouter = require('./routes/tokensRouter');
 const userRouter = require('./routes/userRouter');
-const studentRouter = require('./routes/studentsRouter');
 const groupRouter = require('./routes/groupRouter');
+const quizRouter = require('./routes/quizRouter');
 const courseRouter = require('./routes/courseRouter');
 
 require('dotenv').config();
@@ -20,11 +20,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
-app.use('/api/student', studentRouter);
 app.use('/api/group', groupRouter);
 app.use('/api/auth', userRouter);
 app.use('/api/tokens', tokensRouter);
-app.use('/api', courseRouter);
+app.use('/api/quizzes', quizRouter);
+app.use('/api/courses/', courseRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
