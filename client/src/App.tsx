@@ -7,6 +7,7 @@ import ProfilePage from './components/pages/ProfilePage';
 import Root from './components/Root';
 import { useAppDispatch, useAppSelector } from './hooks/useReduxHook';
 import { checkTokenThunk } from './redux/thunkActions/authThunkActions';
+import AddModulePage from './components/pages/AddModulePage';
 
 
 function App(): JSX.Element {
@@ -29,6 +30,7 @@ function App(): JSX.Element {
         },
         { path: '/add', element: <AddCoursePage /> },
         { path: '/profile1', element: <ProfilePage /> },
+        { path: '/course/:id/module', element: <AddModulePage /> },
       ],
     },
   ]);

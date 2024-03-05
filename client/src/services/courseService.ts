@@ -1,5 +1,5 @@
 import type { AxiosInstance } from 'axios';
-import type { CourseType } from '../types/courseType';
+import type { CourseStyleType, CourseType } from '../types/courseType';
 import axiosInstance from './apiInstance';
 
 class CourseService {
@@ -15,8 +15,8 @@ class CourseService {
     return this.api.get<Promise<CourseType[]>>('/courses').then((res) => res.data);
   }
 
-  public addCourse(data: FormData): Promise<CourseType> {
-    return this.api.post<Promise<CourseType>>('/courses', data). then((res) => res.data)
+  public addCourse(data: FormData): Promise<{created: CourseType, newStyle: CourseStyleType}> {
+    return this.api.post<Promise<{created: CourseType, newStyle: CourseStyleType}>>('/courses', data). then((res) => res.data)
   }
 }
 

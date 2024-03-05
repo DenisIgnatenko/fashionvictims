@@ -22,7 +22,7 @@ export default function CardContentPart({ courseId }: CardContentProps): JSX.Ele
 
   return (
     
-      <Container justifyContent={'center'} m={10}>
+      <Container justifyContent="center" m={10}>
         <VStack flex="2" spacing={8} align={["center","stretch"]}>
           <Text textStyle={['smallTitleHeading','titleHeading']}>{oneCours.title}</Text>
           <Flex justify={['center', 'space-between']} flexDirection={['column', 'row']}alignItems="center" width="70%">
