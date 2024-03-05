@@ -3,6 +3,7 @@ import '@fontsource/open-sans';
 import '@fontsource/montserrat';
 import buttonStyles from './buttonStyles';
 import linkStyles from './linkStyles';
+import scrollLinkStyles from './scrollLinkStyles';
 
 const theme = extendTheme({
   fonts: {
@@ -76,13 +77,19 @@ const theme = extendTheme({
 
     }
   },
+  
   components: {
+
     Link: {
       ...linkStyles,
     },
     Button: {
       ...buttonStyles,
     },
+    ScrollLink: {
+      ...scrollLinkStyles,
+    }
+    
     // ListItem: {
     //   baseStyle: CustomListItemStyle,
     // },

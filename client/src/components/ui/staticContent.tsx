@@ -30,7 +30,7 @@ export default function StaticContent(): JSX.Element {
       <Container justifyContent={'center'} maxW="100%" mt={20} position={'relative'}>
         <Flex flexDirection={{ base: 'column', sm: 'row' }}>
           <VStack flex="2" spacing={6} align="stretch" m="4%" maxW={['80%', '80%', '70%', '60%']}>
-            <Text textStyle={['smallTitleHeading', 'titleHeading']}>
+            <Text id='about' textStyle={['smallTitleHeading', 'titleHeading']}>
               Мы поможем разобраться в том, как устроена мода
             </Text>
             <Text textStyle="simpleText" mb={20}>
@@ -67,7 +67,7 @@ export default function StaticContent(): JSX.Element {
           <Image src={'/Dress.svg'} maxW={['40%', '40%', '35%', '30%']} m={5}></Image>
         </Flex>
 
-        <Text textStyle="titleHeading" fontSize={['30','60']} m="10%">
+        <Text textStyle="titleHeading" fontSize={['30','60']} m="10%" id='courses'>
           Наши курсы
         </Text>
       </Container>
