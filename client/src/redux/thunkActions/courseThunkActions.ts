@@ -8,7 +8,7 @@ export const getPurchasedCourses = createAsyncThunk(
     console.log('getPurchasedCourses: userId:', userId);
     try {
       const response = await courseService.getPurchasedCourses(userId);
-      return response.data;
+      return response;
     } catch (error) {
       console.log(error);
     }

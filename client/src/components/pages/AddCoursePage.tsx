@@ -2,6 +2,7 @@ import { Box, Button, Flex, FormControl, Input , useToast } from '@chakra-ui/rea
 import React, { useState } from 'react'
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import type { EventInfo } from '@ckeditor/ckeditor5-utils';
 import ColorPicker from '../ui/ColorPicker'
 import type { AddCourseType, CourseType } from '../../types/courseType';
 import { useAppDispatch, useAppSelector } from '../../hooks/useReduxHook';
@@ -13,7 +14,8 @@ export default function AddCoursePage(): JSX.Element {
     const {user} = useAppSelector((state)=> state.auth)
     const [editorData, setEditorData] = useState('');
 
-    const handleEditorChange = (event: React.FormEvent<HTMLInputElement>, editor ) => {
+    const handleEditorChange = (event: EventInfo<string, unknown>, editor: ClassicEditor): void => {
+        console.log(editor, typeof editor)
         const data = editor.getData();
         setEditorData(data);
     };

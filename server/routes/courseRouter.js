@@ -1,8 +1,11 @@
 const courseRouter = require('express').Router();
+const upload = require('../utils/multer');
 
-const { Course, CourseStyles, Module, PurchasedCourse } = require('../db/models');
+const {
+  Course, CourseStyles, Module, PurchasedCourse,
+} = require('../db/models');
 
-courseRouter.route('/courses')
+courseRouter.route('/')
   .get(async (req, res) => {
     try {
       const courses = await Course.findAll({ include: CourseStyles });
@@ -13,7 +16,7 @@ courseRouter.route('/courses')
     }
   });
 
-courseRouter.post('/courses', upload.single('img'), async (req, res) => {
+courseRouter.post('/', upload.single('img'), async (req, res) => {
   try {
     const {
       title, price, description, duration, startDate, authorId, bgColor,

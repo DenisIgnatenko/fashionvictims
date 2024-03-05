@@ -18,7 +18,7 @@ export type AddCourseType = {
   duration: HTMLInputElement;
   startDate: HTMLInputElement;
   editorData: HTMLInputElement | string;
-  file: HTMLInputElement & { files: FileList };1
+  file: HTMLInputElement & { files: FileList };
 };
 
 

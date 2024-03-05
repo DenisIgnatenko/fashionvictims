@@ -21,7 +21,7 @@ app.use(express.static('public'));
 
 app.use('/api/auth', userRouter);
 app.use('/api/tokens', tokensRouter);
-app.use('/api/', courseRouter);
+app.use('/api/courses', courseRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
