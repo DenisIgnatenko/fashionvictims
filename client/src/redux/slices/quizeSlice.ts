@@ -1,9 +1,14 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import type { QuizStateType, QuizType } from '../../types/quizType';
-import { getQuizzesByModuleId, saveQuizResult } from '../thunkActions/quizThunkActions';
+import type { QuizResultType, QuizStateType, QuizType } from '../../types/quizType';
+import {
+  getQuizResultsByUserId,
+  getQuizzesByModuleId,
+  saveQuizResult,
+} from '../thunkActions/quizThunkActions';
 
 const initialState: QuizStateType = {
   questions: [],
+  quizResults: [],
   error: null,
   loading: false,
   selectedQuiz: null,
@@ -36,6 +41,13 @@ const quizeSlice = createSlice({
       state.loading = false;
       state.error = action.payload as string;
     });
+    builder.addCase(
+      getQuizResultsByUserId.fulfilled,
+      (state, action: PayloadAction<QuizResultType[]>) => {
+        console.log('action.payload: ', action.payload);
+        state.quizResults = action.payload;
+      },
+    );
     builder.addCase(saveQuizResult.fulfilled, (state, action) => {});
     builder.addCase(saveQuizResult.rejected, (state, action): void => {});
     builder.addCase(saveQuizResult.pending, (state) => {});

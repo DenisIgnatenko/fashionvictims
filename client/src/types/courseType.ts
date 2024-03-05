@@ -7,7 +7,7 @@ export type CourseType = {
   startDate: string;
   price: number;
   CourseStyle: CourseStyleType;
-  modules?: ModuleType[];
+  modules: ModuleType[];
 };
 
 export type AddCourseType = {
@@ -21,7 +21,6 @@ export type AddCourseType = {
   file: HTMLInputElement & { files: FileList };
 };
 
-
 export type CourseStyleType = {
   bgColor: string;
   img: string;
@@ -34,6 +33,7 @@ export type AllCoursesType = {
   purchasedCourses: CourseType[];
   loading: boolean;
   error: string | null;
+  availableModules: Record<number, boolean>;
 };
 
 export type ModuleType = {

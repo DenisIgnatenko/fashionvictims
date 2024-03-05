@@ -1,7 +1,9 @@
-import React from 'react';
-import { Box, Button, Flex, Image, Text, VStack } from '@chakra-ui/react';
-import { useAppSelector } from '../../hooks/useReduxHook';
+import { Box, Button, Flex, Image, Stack, Text, VStack } from '@chakra-ui/react';
+import React, { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks/useReduxHook';
+import { fetchCoursesActionThunk } from '../../redux/thunkActions/courseThunkActions';
 import AuthModal from '../ui/AuthModal';
+import CourseCard from '../ui/CourseCard';
 import TestDialogueModal from '../ui/TestDialogueModal';
 import StaticContent from '../ui/staticContent';
 import TeacherCard from '../ui/TeacherCard';
@@ -9,13 +11,13 @@ import CoursesPage from './CoursesPage';
 
 export default function MainPage(): JSX.Element {
   const modal = useAppSelector((state) => state.auth.authModal);
-  // const courses = useAppSelector((state) => state.courses.course);
+  const courses = useAppSelector((state) => state.courses.course);
   const openTest = useAppSelector((state) => state.quiz.openTest);
-  // const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
 
-  // useEffect(() => {
-  //   void dispatch(fetchCoursesActionThunk());
-  // }, []);
+  useEffect(() => {
+    void dispatch(fetchCoursesActionThunk());
+  }, []);
 
   return (
     <Box>
