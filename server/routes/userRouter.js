@@ -77,4 +77,6 @@ router.get('/check', verifyAccessToken, (req, res) => {
   res.json({ user: res.locals.user, accessToken: res.locals.accessToken });
 });
 
+
+router.get('/')
 module.exports = router;

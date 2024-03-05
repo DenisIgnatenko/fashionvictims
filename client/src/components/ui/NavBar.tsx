@@ -10,7 +10,6 @@ import {
   MenuButton,
   MenuItem,
   MenuList,
-  Text,
   useBreakpointValue,
   WrapItem,
 } from '@chakra-ui/react';
@@ -23,8 +22,8 @@ import AuthModal from './AuthModal';
 export default function NavBar(): JSX.Element {
   const isMobile = useBreakpointValue({ base: true, md: false });
   const modal = useAppSelector((state) => state.auth.authModal);
-  const user = useAppSelector((state) => state.auth.user)
-  const dispatch = useAppDispatch()
+  const user = useAppSelector((state) => state.auth.user);
+  const dispatch = useAppDispatch();
   return (
     <Flex
       borderTopRadius="30px"
@@ -57,7 +56,6 @@ export default function NavBar(): JSX.Element {
           </Menu>
         ) : (
           <Flex justify="center" align="center" height="100%">
-            {user.status === 'logged' && <Text variant="">Привет,{`${user.name}`}</Text>}
             <Center mx="auto">
               {' '}
               {/* Центрируем ссылки */}
@@ -108,7 +106,7 @@ export default function NavBar(): JSX.Element {
             )}
           </Flex>
         )}
-              {modal && <AuthModal />}
+        {modal && <AuthModal />}
       </Box>
     </Flex>
   );
