@@ -33,6 +33,15 @@ const theme = extendTheme({
       fontWeight: '400',
       lineHeight: '24px',
     },
+    simpleText: {
+      color: '#425056',
+      fontFamily: 'Montserrat',
+      fontSize: '18px',
+      fontWeight: '400',
+      fontStyle: 'normal',
+      lineHeight: '26px',
+
+    },
     heroH3heading: {
       color: '#E293B6',
       fontFamily: 'Montserrat',
@@ -41,6 +50,31 @@ const theme = extendTheme({
       fontWeight: '500',
       lineHeight: '24px' /* 85.714% */,
     },
+    titleHeading: {
+      color: '#242424',
+      fontFamily: 'Montserrat',
+      fontSize: '40px',
+      fontStyle: 'italic',
+      fontWeight: '400',
+      lineHeight: '54px',
+    },
+    smallTitleHeading: {
+      color: '#242424',
+      fontFamily: 'Montserrat',
+      fontSize: '25px',
+      fontStyle: 'italic',
+      fontWeight: '400',
+      lineHeight: '34px',
+    },
+    smallMainHeading: {
+      fontSize: '4xl',
+      color: '#FFF',
+      fontFamily: 'Montserrat',
+      fontStyle: 'italic',
+      fontWeight: '500',
+      lineHeight: 'normal',
+
+    }
   },
   components: {
     Link: {
