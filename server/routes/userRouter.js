@@ -8,13 +8,14 @@ const verifyAccessToken = require('../middlewares/verifyAccessToken');
 const router = Router();
 
 router.post('/signup', async (req, res) => {
-  const { username, email, password } = req.body;
+  const { name, email, password } = req.body;
+  console.log(req.body);
 
-  if (username && email && password) {
+  if (name && email && password) {
     try {
       const [user, created] = await User.findOrCreate({
         where: { email },
-        defaults: { username, password: await bcrypt.hash(password, 10) },
+        defaults: { name, password: await bcrypt.hash(password, 10) },
       });
 
       if (!created) {
@@ -76,4 +77,6 @@ router.get('/check', verifyAccessToken, (req, res) => {
   res.json({ user: res.locals.user, accessToken: res.locals.accessToken });
 });
 
+
+router.get('/')
 module.exports = router;
