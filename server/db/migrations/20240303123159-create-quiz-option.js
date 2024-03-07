@@ -14,6 +14,7 @@ module.exports = {
       },
       isCorrect: {
         type: Sequelize.BOOLEAN,
+        defaultValue: false,
       },
       comment: {
         type: Sequelize.TEXT,
