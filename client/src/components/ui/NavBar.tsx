@@ -13,15 +13,14 @@ import {
   useBreakpointValue,
   WrapItem,
 } from '@chakra-ui/react';
-import { Link as ScrollLink } from 'react-scroll';
 import React from 'react';
+import { Link as RouterLink } from 'react-router-dom';
+import { Link as ScrollLink } from 'react-scroll';
 import { useAppDispatch, useAppSelector } from '../../hooks/useReduxHook';
 import { setModal } from '../../redux/slices/authSlice';
 import { logOutThunk } from '../../redux/thunkActions/authThunkActions';
-import AuthModal from './AuthModal';
 import scrollLinkStyles from '../../utils/scrollLinkStyles';
-
-
+import AuthModal from './AuthModal';
 
 export default function NavBar(): JSX.Element {
   const isMobile = useBreakpointValue({ base: true, md: false });
@@ -29,13 +28,12 @@ export default function NavBar(): JSX.Element {
   const user = useAppSelector((state) => state.auth.user);
   const dispatch = useAppDispatch();
 
- 
-    const [hover, setHover] = React.useState(false);
-  
-    const style = {
-      ...scrollLinkStyles.baseStyle,
-      ...(hover ? scrollLinkStyles.variants.underlineHover._hover : {}),
-    }
+  const [hover, setHover] = React.useState(false);
+
+  const style = {
+    ...scrollLinkStyles.baseStyle,
+    ...(hover ? scrollLinkStyles.variants.underlineHover._hover : {}),
+  };
   return (
     <Flex
       borderTopRadius="30px"
@@ -74,8 +72,7 @@ export default function NavBar(): JSX.Element {
                     Наши курсы
                   </Link>
                 </MenuItem>
-                
-               
+
                 <MenuItem>
                   <Link variant="burger" href="#">
                     Материалы
@@ -91,19 +88,24 @@ export default function NavBar(): JSX.Element {
           </Menu>
         ) : (
           <Flex justify="center" align="center" height="100%">
+            <WrapItem>
+              <Link as={RouterLink} to={`/`} style={{ textDecoration: 'none' }}>
+                <Avatar size="sm" name="Home" src="/smallStar.svg" />
+              </Link>
+            </WrapItem>
             <Center mx="auto">
               {' '}
               {/* Центрируем ссылки */}
               <ScrollLink
-      style={style}
-      to="about"
-      smooth={true}
-      duration={500}
-      onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => setHover(false)}
-    >
-      Что это такое?
-    </ScrollLink>
+                style={style}
+                to="about"
+                smooth={true}
+                duration={500}
+                onMouseEnter={() => setHover(true)}
+                onMouseLeave={() => setHover(false)}
+              >
+                Что это такое?
+              </ScrollLink>
               <Link variant="underlineHover" href="#courses">
                 Наши курсы
               </Link>
@@ -117,13 +119,7 @@ export default function NavBar(): JSX.Element {
                 Контакты
               </Link>
             </Center>
-            {/* <Spacer /> /!* Элемент для разделения пространства *!/ */}
-            {/* <IconButton
-              aria-label="Login"
-              icon={<AtSignIcon />}
-              variant="ghost"
-              color="whiteAlpha.900"
-            /> */}
+
             {user.status === 'logged' ? (
               <>
                 <IconButton
@@ -134,7 +130,9 @@ export default function NavBar(): JSX.Element {
                   color="whiteAlpha.900"
                 />
                 <WrapItem>
-                  <Avatar size="md" name={user.name} src={user.img} />
+                  <Link as={RouterLink} to={`/profile1`} style={{ textDecoration: 'none' }}>
+                    <Avatar size="md" name={user.name} src={user.img} />
+                  </Link>
                 </WrapItem>
               </>
             ) : (

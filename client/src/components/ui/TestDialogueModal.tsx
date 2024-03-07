@@ -111,14 +111,21 @@ export default function TestDialogueModal({
       if (isPassed) {
         console.log('Тест пройден');
         if (user.status === 'logged') {
-          void dispatch(
+          const saveResultAction = dispatch(
             saveQuizResult({
               userId: user.id,
               moduleId: quiz.questions[currentQuestionIndex].moduleId,
               score: percentageOfCorrectAnswers,
             }),
           );
-          void dispatch(setAvailableModules(nextModuleId));
+
+          saveResultAction.then(() => {
+            const currentAvailableModules = useAppSelector(
+              (state) => state.courses.availableModules,
+            );
+            const nextAvailableModules = { ...currentAvailableModules, [nextModuleId]: true };
+            void dispatch(setAvailableModules(nextAvailableModules));
+          });
         }
       }
       setQuizFinished(true);
@@ -198,6 +205,7 @@ export default function TestDialogueModal({
             </VStack>
           )}
         </ModalBody>
+
         <ModalFooter>
           <Text>
             Вопрос {currentQuestionIndex + 1} из {questions.length}

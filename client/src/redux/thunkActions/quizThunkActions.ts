@@ -10,6 +10,9 @@ export type SaveQuizResultArgType = {
 
 export type QuizResultResponseType = {
   success: boolean;
+  moduleId: number;
+  score: number;
+  nextModuleId?: number | null;
 };
 
 export const getQuizzesByModuleId = createAsyncThunk(
@@ -26,11 +29,30 @@ export const getQuizzesByModuleId = createAsyncThunk(
 
 export const saveQuizResult = createAsyncThunk(
   'quiz/saveResult',
-  async (args: SaveQuizResultArgType) => {
+  async (args: SaveQuizResultArgType, { getState }) => {
+    const { userId, moduleId, score } = args;
     try {
-      const { userId, moduleId, score } = args;
       const response = await QuizService.saveQuizResult(userId, moduleId, score);
-      return response.data as QuizResultResponseType;
+
+      const quizResultData: QuizResultResponseType = response.data as QuizResultResponseType;
+      const state = getState();
+      const purchasedCourses = state.courses.purchasedCourses;
+
+      console.log('response.data: ', response.data);
+      const course = purchasedCourses.find((course) =>
+        course.modules.some((module) => module.id === moduleId),
+      );
+      if (!course) {
+        return console.log('Course not found');
+      }
+      const moduleIndex = course.modules.findIndex((module) => module.id === moduleId);
+      const nextModule = course.modules[moduleIndex + 1];
+
+      console.log('RESPONSE DATA2: ', quizResultData, 'NextModule: ', nextModule.id);
+      return {
+        ...quizResultData,
+        nextModuleId: nextModule ? nextModule.id : null,
+      };
     } catch (error) {
       return console.log(error);
     }

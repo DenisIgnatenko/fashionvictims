@@ -17,7 +17,7 @@ export default function ProfilePage(): JSX.Element {
   };
 
   return (
-    <Flex h="100vh" p={5} overflow="hidden" position="relative" bg="#4D6877">
+    <Flex p={5} overflow="auto" position="relative" bg="#4D6877">
       {/* <Slide direction="left" in={isOpen}> */}
       <Flex>
         <Collapse in={isOpen} animateOpacity>
@@ -38,7 +38,7 @@ export default function ProfilePage(): JSX.Element {
         </Collapse>
       </Flex>
       {/* <ModuleContent /> */}
-      {selectedModule && <ModuleContent module={selectedModule} />}
+      {selectedModule && <ModuleContent flex="1" minH="100vh" module={selectedModule} />}
       <IconButton
         aria-label="Toggle Menu"
         icon={isOpen ? <ArrowBackIcon /> : <ArrowForwardIcon />}

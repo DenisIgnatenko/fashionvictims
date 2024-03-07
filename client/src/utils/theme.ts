@@ -4,6 +4,7 @@ import '@fontsource/montserrat';
 import buttonStyles from './buttonStyles';
 import linkStyles from './linkStyles';
 import scrollLinkStyles from './scrollLinkStyles';
+import tabsStyles from './tabsStyles';
 
 const theme = extendTheme({
   fonts: {
@@ -41,7 +42,6 @@ const theme = extendTheme({
       fontWeight: '400',
       fontStyle: 'normal',
       lineHeight: '26px',
-
     },
     heroH3heading: {
       color: '#E293B6',
@@ -74,12 +74,10 @@ const theme = extendTheme({
       fontStyle: 'italic',
       fontWeight: '500',
       lineHeight: 'normal',
-
-    }
+    },
   },
-  
-  components: {
 
+  components: {
     Link: {
       ...linkStyles,
     },
@@ -88,11 +86,10 @@ const theme = extendTheme({
     },
     ScrollLink: {
       ...scrollLinkStyles,
-    }
-    
-    // ListItem: {
-    //   baseStyle: CustomListItemStyle,
-    // },
+    },
+    Tabs: {
+      ...tabsStyles,
+    },
   },
 });
 

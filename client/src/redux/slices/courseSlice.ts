@@ -2,6 +2,7 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 import type { AllCoursesType, CourseType } from '../../types/courseType';
 import { fetchCoursesActionThunk, getPurchasedCourses } from '../thunkActions/courseThunkActions';
+import { saveQuizResult } from '../thunkActions/quizThunkActions';
 
 const initialState: AllCoursesType = {
   purchasedCourses: [],
@@ -37,6 +38,18 @@ const courseSlice = createSlice({
     });
     builder.addCase(fetchCoursesActionThunk.fulfilled, (state, action) => {
       state.course = action.payload;
+    });
+    builder.addCase(saveQuizResult.pending, (state) => {
+      state.loading = true;
+      console.log('Pending, state: ', state);
+    });
+    builder.addCase(saveQuizResult.fulfilled, (state, action) => {
+      const nextModuleId = action.payload.nextModuleId;
+      console.log('nextModuleId: ', nextModuleId);
+      if (nextModuleId && !state.availableModules[nextModuleId]) {
+        state.availableModules[nextModuleId] = true;
+        console.log('state.availableModules: ', state.availableModules);
+      }
     });
   },
 });
