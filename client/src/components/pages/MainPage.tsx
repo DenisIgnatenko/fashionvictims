@@ -2,21 +2,15 @@ import React from 'react';
 import { Box, Button, Flex, Image, Text, VStack } from '@chakra-ui/react';
 import { useAppSelector } from '../../hooks/useReduxHook';
 import AuthModal from '../ui/AuthModal';
-import TestDialogueModal from '../ui/TestDialogueModal';
 import StaticContent from '../ui/staticContent';
 import TeacherCard from '../ui/TeacherCard';
 import CoursesPage from './CoursesPage';
 
+
 export default function MainPage(): JSX.Element {
+
   const modal = useAppSelector((state) => state.auth.authModal);
-  // const courses = useAppSelector((state) => state.courses.course);
-  const openTest = useAppSelector((state) => state.quiz.openTest);
-  // const dispatch = useAppDispatch();
-
-  // useEffect(() => {
-  //   void dispatch(fetchCoursesActionThunk());
-  // }, []);
-
+  
   return (
     <Box>
       <Flex
@@ -62,7 +56,7 @@ export default function MainPage(): JSX.Element {
               alt="Character"
               position="relative"
               top={['auto', '20']}
-              right={{ base: 'auto', md:'-65'}}
+              right={{ base: 'auto', md:'-5'}}
               width={{ base: 500, md: 550, xl: 650, sm: 330 }}
             />
           </Box>
@@ -130,11 +124,12 @@ export default function MainPage(): JSX.Element {
         
       </Flex>
       {modal && <AuthModal />}
-      {openTest && <TestDialogueModal />}
+      {/* {openTest && <TestDialogueModal />} */}
 
       <StaticContent/>
       <CoursesPage />
       <TeacherCard/>
+    
     </Box>
   );
 }

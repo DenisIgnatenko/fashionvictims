@@ -6,6 +6,8 @@ import type { ModuleType } from '../../types/courseType';
 import CourseSearch from '../ui/profile/CourseSearch';
 import ModuleContent from '../ui/profile/ModuleContent';
 import Sidebar from '../ui/profile/Sidebar';
+import { useParams } from 'react-router-dom';
+import { WiSnow } from 'react-icons/wi';
 
 export default function ProfilePage(): JSX.Element {
   const { user } = useAppSelector((state) => state.auth);
@@ -16,7 +18,6 @@ export default function ProfilePage(): JSX.Element {
   const selectModule = (module: ModuleType): void => {
     setSelectedModule(module);
   };
-
   return (
     <Flex h="100vh" p={5} overflow="hidden" position="relative" bg="#4D6877">
       {/* <Slide direction="left" in={isOpen}> */}

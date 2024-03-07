@@ -34,6 +34,7 @@ export type AllCoursesType = {
   purchasedCourses: CourseType[];
   loading: boolean;
   error: string | null;
+  openPaymentModal: boolean | number;
 };
 
 export type ModuleType = {
@@ -44,3 +45,8 @@ export type ModuleType = {
   videoURL: string;
   article: string;
 };
+
+export type PurchasedCourseType ={
+  courseId: number;
+  userId: number;
+}
