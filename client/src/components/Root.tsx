@@ -2,6 +2,7 @@ import { Container, Flex } from '@chakra-ui/react';
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 import NavBar from './ui/NavBar';
+import Footer from './ui/Footer';
 
 export default function Root(): JSX.Element {
   return (
@@ -10,6 +11,7 @@ export default function Root(): JSX.Element {
         {' '}
         <NavBar />
         <Outlet />
+        <Footer/>
       </Container>
     </Flex>
   );
