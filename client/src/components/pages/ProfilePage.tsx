@@ -3,7 +3,6 @@ import { Box, Collapse, Flex, IconButton, useDisclosure } from '@chakra-ui/react
 import React, { useState } from 'react';
 import { useAppSelector } from '../../hooks/useReduxHook';
 import type { ModuleType } from '../../types/courseType';
-import CourseSearch from '../ui/profile/CourseSearch';
 import ModuleContent from '../ui/profile/ModuleContent';
 import Sidebar from '../ui/profile/Sidebar';
 import { useParams } from 'react-router-dom';
@@ -34,7 +33,6 @@ export default function ProfilePage(): JSX.Element {
               borderRadius="16px"
               position="relative"
             >
-              <CourseSearch />
               <Sidebar onSelectModule={selectModule} />
             </Box>
           )}

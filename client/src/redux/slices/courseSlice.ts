@@ -7,6 +7,7 @@ const initialState: AllCoursesType = {
   purchasedCourses: [],
   loading: false,
   error: null,
+  availableModules: {},
   course: [],
   openPaymentModal: false,
 };
@@ -17,6 +18,9 @@ const courseSlice = createSlice({
   reducers: {
     setPurchasedCourses: (state, action: PayloadAction<CourseType[]>) => {
       state.purchasedCourses = action.payload;
+    },
+    setAvailableModules: (state, action: PayloadAction<Record<number, boolean>>) => {
+      state.availableModules = action.payload;
     },
 
     setOpenPaymentModal: (state, action: PayloadAction<boolean>) => {
@@ -46,5 +50,5 @@ const courseSlice = createSlice({
   },
 });
 
-export const { setPurchasedCourses, setOpenPaymentModal } = courseSlice.actions;
+export const { setPurchasedCourses, setAvailableModules } = courseSlice.actions;
 export default courseSlice.reducer;

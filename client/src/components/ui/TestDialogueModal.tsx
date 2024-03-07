@@ -15,6 +15,7 @@ import {
 } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/useReduxHook';
+import { setAvailableModules } from '../../redux/slices/courseSlice';
 import { setOpenTest } from '../../redux/slices/quizeSlice';
 import { getQuizzesByModuleId, saveQuizResult } from '../../redux/thunkActions/quizThunkActions';
 import type { QuizType } from '../../types/quizType';
@@ -41,7 +42,13 @@ const unorderedListStyle = {
   width: '100%',
 };
 
-export default function TestDialogueModal(): JSX.Element | null {
+type TestDialogueModalProps = {
+  moduleId: number;
+};
+
+export default function TestDialogueModal({
+  moduleId,
+}: TestDialogueModalProps): JSX.Element | null {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [question, setQuestion] = useState<QuizType | null>(null);
   const [choiceMade, setChoiceMade] = useState(false);
@@ -52,13 +59,14 @@ export default function TestDialogueModal(): JSX.Element | null {
   const questions = useAppSelector((state) => state.quiz.questions);
   const quiz = useAppSelector((state) => state.quiz);
   const user = useAppSelector((state) => state.auth.user);
-  const loading = useAppSelector((state) => state.quiz.loading);
+  // const loading = useAppSelector((state) => state.quiz.loading);
   const dispatch = useAppDispatch();
 
   let isLastQuestion = currentQuestionIndex + 1 === questions.length;
 
+  console.log('moduleId: ', moduleId);
   useEffect(() => {
-    void dispatch(getQuizzesByModuleId(2));
+    void dispatch(getQuizzesByModuleId(moduleId));
   }, [dispatch]);
 
   useEffect(() => {
@@ -98,6 +106,7 @@ export default function TestDialogueModal(): JSX.Element | null {
 
       const percentageOfCorrectAnswers = (correctAnswerCount / questions.length) * 100;
       const isPassed = percentageOfCorrectAnswers >= 70;
+      const nextModuleId = question?.moduleId + 1;
 
       if (isPassed) {
         console.log('Тест пройден');
@@ -109,6 +118,7 @@ export default function TestDialogueModal(): JSX.Element | null {
               score: percentageOfCorrectAnswers,
             }),
           );
+          void dispatch(setAvailableModules(nextModuleId));
         }
       }
       setQuizFinished(true);

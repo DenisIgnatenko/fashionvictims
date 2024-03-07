@@ -18,8 +18,29 @@ quizRouter.route('/:moduleId').get(async (req, res) => {
 quizRouter.route('/quizresults').post(async (req, res) => {
   try {
     const { userId, moduleId, score } = req.body;
-    const quizResult = await QuizResult.create({ userId, moduleId, score });
+    const [quizResult] = await QuizResult.findOrCreate({
+      where: {
+        userId,
+        moduleId,
+      },
+      defaults: {
+        score,
+      },
+    });
+
     res.json(quizResult);
+  } catch (error) {
+    console.log(error);
+    res.status(500);
+  }
+});
+
+quizRouter.route('/quizresults/:userId').get(async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const results = await QuizResult.findAll({ where: { userId } });
+    console.log(results);
+    res.json(results);
   } catch (error) {
     console.log(error);
     res.status(500);

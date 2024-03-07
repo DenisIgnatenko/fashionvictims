@@ -20,7 +20,7 @@ export default function ColorPicker({color, setColor}: ColorPickerPropsType): JS
         "pink.500"
     ];
     return (
-        <Center marginTop={5}>
+        <Center>
             <Popover variant="picker">
             <PopoverTrigger>
         <Button
@@ -28,7 +28,6 @@ export default function ColorPicker({color, setColor}: ColorPickerPropsType): JS
           width="fit-content"
           borderRadius="full"
           padding={0}
-          marginBottom={5}
           position="relative"
         >
           <Box
