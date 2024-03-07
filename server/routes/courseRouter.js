@@ -1,8 +1,10 @@
+/* eslint-disable no-unused-expressions */
+/* eslint-disable no-await-in-loop */
 const courseRouter = require('express').Router();
 const upload = require('../utils/multer');
 
 const {
-  Course, CourseStyles, Module, PurchasedCourse,
+  Course, CourseStyles, Module, PurchasedCourse, Quiz, QuizOption,
 } = require('../db/models');
 
 courseRouter.route('/')
@@ -92,6 +94,59 @@ courseRouter.get('/users/:id/purchasedcourses', async (req, res) => {
   } catch (error) {
     console.error('Ошибка при получении купленных курсов:', error);
     res.status(500).json({ message: 'Ошибка сервера при получении купленных курсов' });
+  }
+});
+
+// (alias) type QuestionType = {
+//   questionText?: FormDataEntryValue | undefined;
+//   answers: AnswerType[];
+//   num?: number | undefined;
+// }
+
+// export type AnswerType = {
+//   answer?: FormDataEntryValue;
+//   comment?: FormDataEntryValue;
+//   isCorrect?: FormDataEntryValue | boolean;
+// }
+
+courseRouter.post('/:id/module', async (req, res) => {
+  try {
+    const {
+      questions, videoURL, name, article,
+    } = req.body;
+    const { id } = req.params;
+    // console.log(questions, videoURL, name, article, id);
+    const existingModules = await Module.findAll({ where: { courseId: id } });
+    const currentOrder = existingModules.length + 1;
+    const createdModule = (await Module.create({
+      videoURL, name, article, order: currentOrder, courseId: id,
+    })).dataValues;
+    // console.log(questions, videoURL, name, article, id, createdModule);
+    // console.log(createdModule);
+
+    for (let i = 0; i < questions.length; i += 1) {
+      const createdQuiz = (await Quiz.create({
+        moduleId: createdModule.id, question: questions[i].questionText,
+      })).dataValues;
+      for (let j = 0; j < questions[i].answers.length; j += 1) {
+        'isCorrect' in questions[i].answers[j]
+          ? await QuizOption.create({
+            variant: questions[i].answers[j].answer,
+            comment: questions[i].answers[j].comment,
+            isCorrect: true,
+            quizId: createdQuiz.id,
+          })
+          : await QuizOption.create({
+            variant: questions[i].answers[j].answer,
+            comment: questions[i].answers[j].comment,
+            quizId: createdQuiz.id,
+          });
+      }
+    }
+    res.sendStatus(200);
+    // console.log(questions, videoURL, name, article, id, createdModule);
+  } catch (error) {
+    console.log(error);
   }
 });
 
