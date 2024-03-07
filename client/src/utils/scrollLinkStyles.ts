@@ -1,4 +1,4 @@
-const scrolllinkStyles = {
+const scrollLinkStyles = {
     baseStyle: {
       margin: '1rem',
       padding: '',
@@ -11,12 +11,16 @@ const scrolllinkStyles = {
       color: '#FFFFFF',
       maxWidth: '100%',
       textAlign: 'center',
+      
     },
     variants: {
       underlineHover: {
         _hover: {
           textDecoration: 'none',
+          borderBottom: '4px solid #E293B6',
           borderBottomColor: '#E293B6',
+      // color: '#E293B6',
+
         },
       },
       burger: {
@@ -25,4 +29,4 @@ const scrolllinkStyles = {
     },
   };
   
-  export default scrolllinkStyles;
+  export default scrollLinkStyles;

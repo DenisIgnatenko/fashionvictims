@@ -34,6 +34,7 @@ export type AllCoursesType = {
   loading: boolean;
   error: string | null;
   availableModules: Record<number, boolean>;
+  openPaymentModal: boolean | number;
 };
 
 export type ModuleType = {
@@ -45,6 +46,10 @@ export type ModuleType = {
   article: string;
 };
 
+export type PurchasedCourseType ={
+  courseId: number;
+  userId: number;
+}
 export type AnswerType = {
   answer?: FormDataEntryValue;
   comment?: FormDataEntryValue;

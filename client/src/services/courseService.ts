@@ -1,16 +1,28 @@
 import type { AxiosInstance } from 'axios';
-import type { CourseStyleType, CourseType, ModuleType, QuestionType } from '../types/courseType';
+import type { CourseType, PurchasedCourseType, ModuleType, QuestionType } from '../types/courseType';
 import axiosInstance from './apiInstance';
 import type { AddModuleType } from '../redux/thunkActions/courseThunkActions';
 
 
 class CourseService {
-  constructor(private readonly api: AxiosInstance) { }
-
+  constructor(private readonly api: AxiosInstance) {}
 
   async getPurchasedCourses(userId: number): Promise<CourseType[]> {
     const response = await this.api.get<CourseType[]>(`/courses/users/${userId}/purchasedcourses`);
     return response.data;
+  }
+  public addPurchasedCourse(data: {
+    userId: number;
+    courseId: number;
+  }): Promise<PurchasedCourseType> {
+    
+    return this.api
+      .post<PurchasedCourseType>(`/courses/users/${data.userId}/buycourse`, data)
+      .then((res) => res.data)
+      .catch((error) => {
+        console.error('Ошибка при добавлении курса:', error);
+        throw error; // Переброс ошибки для дальнейшей обработки
+      });
   }
 
   public getCourses(): Promise<CourseType[]> {

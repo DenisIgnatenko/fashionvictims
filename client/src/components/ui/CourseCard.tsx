@@ -3,6 +3,8 @@ import { Box, Flex } from '@chakra-ui/react';
 import CardImgPart from './cardImgPart';
 import CardContentPart from './cardContentPart';
 import {  CourseType } from '../../types/courseType';
+import PayModal from './payment/PayModal';
+import { useAppSelector } from '../../hooks/useReduxHook';
 
 type CourseCardType = {
   index: number;
@@ -11,6 +13,7 @@ type CourseCardType = {
 };
 
 export default function CourseCard({ index, courseId, course }: CourseCardType): JSX.Element {
+
 
   return (
     <Box bgColor={course.CourseStyle?.bgColor} borderRadius={30} p={6} h="100%">
@@ -24,6 +27,7 @@ export default function CourseCard({ index, courseId, course }: CourseCardType):
           <>
             <CardImgPart img={course?.CourseStyle.img} />
             <CardContentPart courseId={courseId} />
+            
           </>
         ) : (
           <>
@@ -32,6 +36,7 @@ export default function CourseCard({ index, courseId, course }: CourseCardType):
           </>
         )}
       </Flex>
+  
     </Box>
   );
 }
