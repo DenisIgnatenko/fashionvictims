@@ -1,7 +1,11 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 import type { AllCoursesType, CourseType } from '../../types/courseType';
-import { fetchCoursesActionThunk, getPurchasedCourses } from '../thunkActions/courseThunkActions';
+import {
+  addPurchasedCourseThunk,
+  fetchCoursesActionThunk,
+  getPurchasedCourses,
+} from '../thunkActions/courseThunkActions';
 import { saveQuizResult } from '../thunkActions/quizThunkActions';
 
 const initialState: AllCoursesType = {
@@ -10,6 +14,7 @@ const initialState: AllCoursesType = {
   error: null,
   availableModules: {},
   course: [],
+  openPaymentModal: false,
 };
 
 const courseSlice = createSlice({
@@ -21,6 +26,10 @@ const courseSlice = createSlice({
     },
     setAvailableModules: (state, action: PayloadAction<Record<number, boolean>>) => {
       state.availableModules = action.payload;
+    },
+
+    setOpenPaymentModal: (state, action: PayloadAction<boolean>) => {
+      state.openPaymentModal = action.payload;
     },
   },
 
@@ -51,8 +60,10 @@ const courseSlice = createSlice({
         console.log('state.availableModules: ', state.availableModules);
       }
     });
+    builder.addCase(addPurchasedCourseThunk.fulfilled, (state, action) => {});
   },
 });
 
-export const { setPurchasedCourses, setAvailableModules } = courseSlice.actions;
+export const { setPurchasedCourses, setAvailableModules, setOpenPaymentModal } =
+  courseSlice.actions;
 export default courseSlice.reducer;

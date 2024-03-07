@@ -5,7 +5,6 @@ import { fetchCoursesActionThunk } from '../../redux/thunkActions/courseThunkAct
 import AuthModal from '../ui/AuthModal';
 import StaticContent from '../ui/staticContent';
 import TeacherCard from '../ui/TeacherCard';
-import TestDialogueModal from '../ui/TestDialogueModal';
 import CoursesPage from './CoursesPage';
 
 export default function MainPage(): JSX.Element {
@@ -135,7 +134,7 @@ export default function MainPage(): JSX.Element {
         )}
       </Flex>
       {modal && <AuthModal />}
-      {openTest && <TestDialogueModal />}
+      {/* {openTest && <TestDialogueModal />} */}
 
       <StaticContent />
       <CoursesPage />

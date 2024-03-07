@@ -1,31 +1,32 @@
 const courseRouter = require('express').Router();
 const upload = require('../utils/multer');
 
-const {
-  Course, CourseStyles, Module, PurchasedCourse,
-} = require('../db/models');
+const { Course, CourseStyles, Module, PurchasedCourse } = require('../db/models');
 
-courseRouter.route('/')
-  .get(async (req, res) => {
-    try {
-      const courses = await Course.findAll({ include: CourseStyles });
-      res.json(courses);
-    } catch (error) {
-      console.log(error.message);
-      res.status(500).json({ message: error.message });
-    }
-  });
+courseRouter.route('/').get(async (req, res) => {
+  try {
+    const courses = await Course.findAll({ include: CourseStyles });
+    res.json(courses);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ message: error.message });
+  }
+});
 
 courseRouter.post('/', upload.single('img'), async (req, res) => {
   try {
-    const {
-      title, price, description, duration, startDate, authorId, bgColor,
-    } = req.body;
+    const { title, price, description, duration, startDate, authorId, bgColor } = req.body;
 
     // eslint-disable-next-line max-len
-    if (!(title && price && description && duration && startDate && authorId)) return res.sendStatus(401);
+    if (!(title && price && description && duration && startDate && authorId))
+      return res.sendStatus(401);
     const created = await Course.create({
-      title, price, description, duration, startDate, authorId,
+      title,
+      price,
+      description,
+      duration,
+      startDate,
+      authorId,
     });
     const newStyle = await CourseStyles.create({
       bgColor,
@@ -92,6 +93,22 @@ courseRouter.get('/users/:id/purchasedcourses', async (req, res) => {
   } catch (error) {
     console.error('Ошибка при получении купленных курсов:', error);
     res.status(500).json({ message: 'Ошибка сервера при получении купленных курсов' });
+  }
+});
+
+courseRouter.route('/users/:id/buycourse').post(async (req, res) => {
+  const userId = parseInt(req.params.id, 10);
+  const courseId = req.body.courseId;
+  console.log(userId, courseId);
+  try {
+    const [addPurchasedCourse, created] = await PurchasedCourse.findOrCreate({
+      where: { userId, courseId },
+      defaults: { userId, courseId },
+    });
+    res.status(200).json({ addPurchasedCourse, created });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ message: error.message });
   }
 });
 
