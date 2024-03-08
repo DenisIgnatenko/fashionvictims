@@ -178,9 +178,15 @@ const NavBar: React.FC = () => {
                     color="whiteAlpha.900"
                   />
                   <WrapItem>
-                    <Link as={RouterLink} to={`/profile1`} style={{ textDecoration: 'none' }}>
-                      <Avatar size="md" name={user.name} src={user.img} />
-                    </Link>
+                    {user.role === 'admin' ? (
+                      <Link as={RouterLink} to={`/add`} style={{ textDecoration: 'none' }}>
+                        <Avatar size="md" name={user.name} src={user.img} />
+                      </Link>
+                    ) : (
+                      <Link as={RouterLink} to={`/profile1`} style={{ textDecoration: 'none' }}>
+                        <Avatar size="md" name={user.name} src={user.img} />
+                      </Link>
+                    )}
                   </WrapItem>
                 </Flex>
               </>

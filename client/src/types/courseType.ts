@@ -39,14 +39,25 @@ export type AllCoursesType = {
 
 export type ModuleType = {
   id: number;
-  name: string;
+  name: string | FormDataEntryValue;
   courseId: number;
   order: number;
-  videoURL: string;
+  videoURL: string | FormDataEntryValue;
   article: string;
 };
 
 export type PurchasedCourseType ={
   courseId: number;
   userId: number;
+}
+export type AnswerType = {
+  answer?: FormDataEntryValue;
+  comment?: FormDataEntryValue;
+  isCorrect?: FormDataEntryValue | boolean;
+}
+
+export type QuestionType = {
+  questionText?: FormDataEntryValue;
+  answers: AnswerType[];
+  num?: number;
 }

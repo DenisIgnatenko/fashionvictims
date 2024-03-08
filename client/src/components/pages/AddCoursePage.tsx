@@ -1,7 +1,7 @@
 import { Box, Button, Flex, FormControl, Input, useToast, Text } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import type ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import type { EventInfo } from '@ckeditor/ckeditor5-utils';
 import { useNavigate } from 'react-router-dom';
 import ColorPicker from '../ui/ColorPicker'
@@ -43,12 +43,12 @@ export default function AddCoursePage(): JSX.Element {
         if (user.status === 'logged') formData.append('authorId', user.id.toString())
         dispatch(addCourseThunk(formData))
             .unwrap()
-            .then((res):void => {
+            .then((res): void => {
                 const createdId = res.created.id
                 console.log(res, createdId)
                 navigate(`/course/${createdId}/module`)
 
-            } ) // Выслать с бека в ответе id курса, здесь перехватить и navigate(/addmodules/curse/id)
+            }) // Выслать с бека в ответе id курса, здесь перехватить и navigate(/addmodules/curse/id)
             .catch(console.log)
         e.currentTarget.reset()
         setEditorData('')
@@ -84,14 +84,14 @@ export default function AddCoursePage(): JSX.Element {
                 <FormControl margin='8px 0px 8px 0px'>
                     <Input bg='white' borderRadius='12px' placeholder='Краткое описание' name='description' type='text' isRequired />
                 </FormControl>
-                <FormControl width="31%" margin='8px 0px 8px 0px' >
+                <FormControl width="15%" margin='8px 0px 8px 0px' >
                     <Input bg='white' borderRadius='12px' name='startDate' type='date' isRequired />
                 </FormControl>
-                <FormControl width="31%" margin='8px 0px 8px 0px' >
+                <FormControl width="15%" margin='8px 0px 8px 0px' >
                     <Input bg='white' borderRadius='12px' placeholder='Цена, руб.' name='price' type='number' isRequired />
                 </FormControl>
-                <FormControl width="31%" margin='8px 0px 8px 0px'>
-                    <Input bg='white' borderRadius='12px' placeholder='Продолжительность, часов' name='duration' type='number' isRequired />
+                <FormControl width="15%" margin='8px 0px 8px 0px'>
+                    <Input bg='white' borderRadius='12px' placeholder='Часы' name='duration' type='number' isRequired />
                 </FormControl>
                 <FormControl width="auto" margin='8px 0px 8px 0px'>
                     Выберите цвет курса:
@@ -100,7 +100,7 @@ export default function AddCoursePage(): JSX.Element {
                 <FormControl width="auto" margin='8px 0px 8px 0px'>
                     <input placeholder='Изображение для карточки курса' type='file' name='file' required />
                 </FormControl>
-                <Box width="100%">
+                {/* <Box width="100%">
                     <CKEditor
                         editor={ClassicEditor}
                         data={editorData}
@@ -116,7 +116,7 @@ export default function AddCoursePage(): JSX.Element {
                         }}
                     />
 
-                </Box>
+                </Box> */}
                 <Flex m='auto' mt={5} justifyContent="center">
                     <Button variant='primeVariant' type='submit'>Создать курс</Button>
                 </Flex>

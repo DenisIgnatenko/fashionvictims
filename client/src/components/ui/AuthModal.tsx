@@ -17,7 +17,7 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
-import React from 'react';
+import React, { useState } from 'react';
 import { useAppDispatch } from '../../hooks/useReduxHook';
 import { setModal } from '../../redux/slices/authSlice';
 import { signInThunk, signUpThunk } from '../../redux/thunkActions/authThunkActions';
@@ -28,9 +28,17 @@ const MotionTabPanel = motion(TabPanel);
 export default function AuthModal(): JSX.Element {
   const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
   const dispatch = useAppDispatch();
+  const [passwordError, setPasswordError] = useState('');
   const closeModal = (): void => {
     dispatch(setModal(false));
     onClose();
+  };
+
+  const validatePassword = (password: string) => {
+    const hasUpperCase = /[A-Z]/.test(password);
+    const hasNumber = /\d/.test(password);
+    const isValidLength = password.length >= 6;
+    return hasUpperCase && hasNumber && isValidLength;
   };
 
   const authHandler = (e: React.FormEvent<HTMLFormElement>): void => {
@@ -82,7 +90,7 @@ export default function AuthModal(): JSX.Element {
                         borderColor="#E293B6"
                       />
                     </FormControl>
-                    <Button mt={4} type="submit" colorScheme="teal" variant="secondVariant">
+                    <Button mt={4} type="submit" colorScheme="teal" variant="primeVariant">
                       Войти
                     </Button>
                   </VStack>

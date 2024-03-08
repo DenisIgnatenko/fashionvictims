@@ -1,10 +1,8 @@
-import React from 'react';
 import { Box, Flex } from '@chakra-ui/react';
-import CardImgPart from './cardImgPart';
+import React from 'react';
+import { CourseType } from '../../types/courseType';
 import CardContentPart from './cardContentPart';
-import {  CourseType } from '../../types/courseType';
-import PayModal from './payment/PayModal';
-import { useAppSelector } from '../../hooks/useReduxHook';
+import CardImgPart from './cardImgPart';
 
 type CourseCardType = {
   index: number;
@@ -13,8 +11,6 @@ type CourseCardType = {
 };
 
 export default function CourseCard({ index, courseId, course }: CourseCardType): JSX.Element {
-
-
   return (
     <Box bgColor={course.CourseStyle?.bgColor} borderRadius={30} p={6} h="100%">
       <Flex
@@ -27,16 +23,14 @@ export default function CourseCard({ index, courseId, course }: CourseCardType):
           <>
             <CardImgPart img={course?.CourseStyle.img} />
             <CardContentPart courseId={courseId} />
-            
           </>
         ) : (
           <>
             <CardContentPart courseId={courseId} />
-            <CardImgPart img={course.CourseStyle.img} />
+            <CardImgPart img={course?.CourseStyle.img} />
           </>
         )}
       </Flex>
-  
     </Box>
   );
 }

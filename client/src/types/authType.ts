@@ -2,6 +2,7 @@ export type UserType = {
   id: number;
   name: string;
   email: string;
+  role: string;
   img: string;
 };
 
@@ -9,6 +10,7 @@ export type UserSignUpType = {
   name: string;
   email: string;
   password: string;
+  repeatpassword: string;
 };
 
 export type UserSignInType = {
