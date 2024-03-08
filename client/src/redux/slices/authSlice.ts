@@ -24,6 +24,13 @@ const authSlice = createSlice({
       state.user.status = 'logged';
       state.user = { ...user, ...state.user };
     });
+    builder.addCase(checkTokenThunk.pending, (state, action) => {
+      state.user.status = 'pending';
+    });
+    builder.addCase(checkTokenThunk.rejected, (state, action) => {
+      state.accessToken = '';
+      state.user.status = 'guest';
+    });
 
     builder.addCase(signInThunk.fulfilled, (state, action) => {
       const { accessToken, user } = action.payload;

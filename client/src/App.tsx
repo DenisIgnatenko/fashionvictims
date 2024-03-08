@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import PrivateRouter from './components/HOCs/PrivateRouter';
 import AddCoursePage from './components/pages/AddCoursePage';
@@ -11,15 +11,16 @@ import TeacherCard from './components/ui/TeacherCard';
 import CourseCard from './components/ui/CourseCard';
 import CoursesPage from './components/pages/CoursesPage';
 import AddModulePage from './components/pages/AddModulePage';
+import AccountPage from './components/pages/AccountPage';
 
 
 function App(): JSX.Element {
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.auth);
 
-  useState(() => {
+  useEffect(() => {
     void dispatch(checkTokenThunk());
-  });
+  }, []);
 
   const router = createBrowserRouter([
     {
@@ -28,8 +29,12 @@ function App(): JSX.Element {
       children: [
         { path: '/', element: <MainPage /> },
         {
-          element: <PrivateRouter isAllowed={user.status === 'logged'} />,
-          children: [{ path: '/profile', element: <ProfilePage /> }],
+          element: <PrivateRouter isAllowed={user.status !== 'guest'} redirect='/' />,
+          children: [
+            { path: '/profile', element: <ProfilePage /> },
+            { path: '/account', element: <AccountPage /> }
+          ],
+
         },
         { path: '/add', element: <AddCoursePage /> },
         { path: '/profile1', element: <ProfilePage /> },

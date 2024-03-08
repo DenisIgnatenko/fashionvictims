@@ -19,11 +19,12 @@ courseRouter.route('/').get(async (req, res) => {
 
 courseRouter.post('/', upload.single('img'), async (req, res) => {
   try {
-    const { title, price, description, duration, startDate, authorId, bgColor } = req.body;
+    const {
+      title, price, description, duration, startDate, authorId, bgColor,
+    } = req.body;
 
     // eslint-disable-next-line max-len
-    if (!(title && price && description && duration && startDate && authorId))
-      return res.sendStatus(401);
+    if (!(title && price && description && duration && startDate && authorId)) return res.sendStatus(401);
     const created = await Course.create({
       title,
       price,
@@ -47,6 +48,16 @@ courseRouter.post('/', upload.single('img'), async (req, res) => {
 });
 
 module.exports = courseRouter;
+
+courseRouter.get('/users/:id/purchasedcourses', async (req, res) => {
+  try {
+    const userId = parseInt(req.params.id, 10);
+    const authoredCourses = await Course.findAll({ where: { authorId: userId } });
+    res.json(authoredCourses);
+  } catch (error) {
+    res.sendStatus(500);
+  }
+});
 
 courseRouter.get('/users/:id/purchasedcourses', async (req, res) => {
   const userId = parseInt(req.params.id, 10);
@@ -155,7 +166,7 @@ courseRouter.post('/:id/module', async (req, res) => {
 
 courseRouter.route('/users/:id/buycourse').post(async (req, res) => {
   const userId = parseInt(req.params.id, 10);
-  const courseId = req.body.courseId;
+  const { courseId } = req.body;
   console.log(userId, courseId);
   try {
     const [addPurchasedCourse, created] = await PurchasedCourse.findOrCreate({

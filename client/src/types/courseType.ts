@@ -30,6 +30,7 @@ export type CourseStyleType = {
 
 export type AllCoursesType = {
   course: CourseType[];
+  authoredCourses: CourseType[];
   purchasedCourses: CourseType[];
   loading: boolean;
   error: string | null;

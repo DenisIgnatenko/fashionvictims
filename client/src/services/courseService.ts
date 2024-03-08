@@ -11,6 +11,12 @@ class CourseService {
     const response = await this.api.get<CourseType[]>(`/courses/users/${userId}/purchasedcourses`);
     return response.data;
   }
+
+  async getAuthoredCourses(userId: number): Promise<CourseType[]> {
+    const response = await this.api.get<CourseType[]>(`/courses/users/${userId}/authoredcourses`);
+    return response.data;
+  }
+
   public addPurchasedCourse(data: {
     userId: number;
     courseId: number;

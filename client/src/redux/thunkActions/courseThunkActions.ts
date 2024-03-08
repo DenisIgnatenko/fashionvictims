@@ -20,6 +20,19 @@ export const getPurchasedCourses = createAsyncThunk(
     }
   },
 );
+
+export const getAuthoredCourses = createAsyncThunk(
+  'course/getAuthoredCourses',
+  async (userId: number) => {
+    try {
+      const response = await courseService.getAuthoredCourses(userId);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+);
+
 export const addPurchasedCourseThunk = createAsyncThunk<PurchasedCourseType, {userId:number, courseId:number}>(
   'course/addPurchasedCourse', async (data)=> courseService.addPurchasedCourse(data))
 
