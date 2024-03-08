@@ -1,5 +1,5 @@
 import type { AxiosInstance } from 'axios';
-import type { CourseType, PurchasedCourseType, ModuleType, QuestionType } from '../types/courseType';
+import type { CourseType, PurchasedCourseType, ModuleType, QuestionType, CourseStyleType } from '../types/courseType';
 import axiosInstance from './apiInstance';
 import type { AddModuleType } from '../redux/thunkActions/courseThunkActions';
 
