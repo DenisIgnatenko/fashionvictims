@@ -1,17 +1,16 @@
-# Welcome to [School Name]
+# Welcome to Fashion Victims!
 
-At [School Name], we're revolutionizing the understanding of fashion with comprehensive courses that delve into its influence and mechanisms. Our mission is to empower our students with deep knowledge and critical thinking about fashion's socio-cultural, economic, and political impacts.
+At Fashion Victims, we're revolutionizing the understanding of fashion with comprehensive courses that delve into its influence and mechanisms. Our mission is to empower our students with deep knowledge and critical thinking about fashion's socio-cultural, economic, and political impacts.
 
-## What is [School Name]?
+## What is Fashion Victims?
 
-[School Name] offers courses that explore how fashion operates as a powerful and influential phenomenon. Through our curriculum, students learn not only about fashion trends and styles but also about the theoretical underpinnings that shape fashion as a field of study.
+Fashion Victims offers courses that explore how fashion operates as a powerful and influential phenomenon. Through our curriculum, students learn not only about fashion trends and styles but also about the theoretical underpinnings that shape fashion as a field of study.
 
-![Fashion and Learning](/path/to/image.jpg) <!-- Replace `/path/to/image.jpg` with the actual path to your image file -->
-
+![Fashion and Learning](https://raw.githubusercontent.com/DenisIgnatenko/fashionvictims/7b99c9fe5812cbf58d4a5ceec9428fe11b7cc794/client/public/MainPage.png) 
 ## Our Courses
 
 ### Upcoming Start Dates
-- **Fashion Theories (Жертвы моды):** Starts September 20, 2023
+- **Fashion Theories (Жертвы моды):** Starts September 20, 2024
   - Understand the mechanisms through which fashion impacts and is impacted by various socio-cultural, economic, and political factors.
 
 ### Detailed Course Offerings
@@ -50,7 +49,7 @@ At [School Name], we're revolutionizing the understanding of fashion with compre
 
 ## Contact Us
 
-For more information or to enroll in our courses, please visit our website at [Insert URL] or contact us directly at [Insert Contact Email].
+For more information or to enroll in our courses, please visit our website or contact us directly
 
 ---
 
