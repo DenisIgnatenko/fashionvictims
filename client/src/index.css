@@ -1,3 +1,44 @@
 .active {
-    text-decoration: underline;
+	text-decoration: underline;
 }
+
+.timercontainer {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 100vh;
+	box-sizing: border-box;
+	padding: 20px;
+}
+
+.timerbox {
+	display: flex;
+	flex-direction: column;
+	padding: 20px;
+	border: 1px dotted #04AA6D;
+	border-radius: 5px;
+	
+	align-items: center;
+	
+}
+
+.secondsbox {
+	margin-bottom: 20px;
+}
+
+
+.interviewbutton {
+	margin-right: 5px;
+	background-color: #04AA6D;
+	border: none;
+	color: white;
+	padding: 15px 32px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	border-radius: 5px;
+	cursor: pointer;
+}
+

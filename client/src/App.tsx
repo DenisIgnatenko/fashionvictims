@@ -2,16 +2,14 @@ import React, { useState } from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import PrivateRouter from './components/HOCs/PrivateRouter';
 import AddCoursePage from './components/pages/AddCoursePage';
+import AddModulePage from './components/pages/AddModulePage';
 import MainPage from './components/pages/MainPage';
 import ProfilePage from './components/pages/ProfilePage';
 import Root from './components/Root';
+import Timer from './components/ui/InterviewTasks/Timer';
+import Users from './components/ui/InterviewTasks/Users';
 import { useAppDispatch, useAppSelector } from './hooks/useReduxHook';
 import { checkTokenThunk } from './redux/thunkActions/authThunkActions';
-import TeacherCard from './components/ui/TeacherCard';
-import CourseCard from './components/ui/CourseCard';
-import CoursesPage from './components/pages/CoursesPage';
-import AddModulePage from './components/pages/AddModulePage';
-
 
 function App(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -34,6 +32,8 @@ function App(): JSX.Element {
         { path: '/add', element: <AddCoursePage /> },
         { path: '/profile1', element: <ProfilePage /> },
         { path: '/course/:id/module', element: <AddModulePage /> },
+        { path: '/timer', element: <Timer /> },
+        { path: '/users', element: <Users /> },
       ],
     },
   ]);

@@ -62,7 +62,7 @@ export default function PayModal({ courseId }: payModalPropsType): JSX.Element {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     // Создаем маску с звездочками вместо вводимых символов
     const value = event.target.value;
-if (!value) return;
+    if (!value) return;
     const maskedValue = value.replace(/./g, '*'); // Заменяем каждый символ на *
     setMaskedValue(maskedValue);
   };
@@ -114,7 +114,7 @@ if (!value) return;
                   <FormControl isRequired>
                     <FormLabel>Срок действия</FormLabel>
                     <InputMask mask="99/99" maskChar="_">
-                      {(inputProps:React.InputHTMLAttributes<HTMLInputElement>) => (
+                      {(inputProps: React.InputHTMLAttributes<HTMLInputElement>) => (
                         <Input
                           {...inputProps}
                           type="text"
@@ -128,7 +128,7 @@ if (!value) return;
 
                   <FormControl isRequired>
                     <FormLabel>CVV</FormLabel>
-                    <InputMask mask="999"  value={maskedValue} maskChar="*" onChange={handleChange} >
+                    <InputMask mask="999" value={maskedValue} maskChar="*" onChange={handleChange}>
                       {(inputProps: React.InputHTMLAttributes<HTMLInputElement>) => (
                         <Input
                           {...inputProps}
@@ -152,7 +152,6 @@ if (!value) return;
                     w="full"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                   
                   >
                     Оплатить
                   </MotionButton>

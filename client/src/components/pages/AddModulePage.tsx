@@ -1,14 +1,14 @@
 /* eslint-disable prefer-destructuring */
-import { Box, Button, Flex, FormControl, Input, Text, useToast } from '@chakra-ui/react'
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
-import { CKEditor } from '@ckeditor/ckeditor5-react'
-import type { EventInfo } from '@ckeditor/ckeditor5-utils'
-import React, { useState } from 'react'
-import { useParams } from 'react-router-dom'
-import { useAppDispatch, useAppSelector } from '../../hooks/useReduxHook'
-import { addModuleThunk } from '../../redux/thunkActions/courseThunkActions'
-import type { AddCourseType, QuestionType } from '../../types/courseType'
-import QuizzConstructor from '../ui/QuizzConstructor'
+import { Box, Button, Flex, FormControl, Input, Text, useToast } from '@chakra-ui/react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import type { EventInfo } from '@ckeditor/ckeditor5-utils';
+import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../hooks/useReduxHook';
+import { addModuleThunk } from '../../redux/thunkActions/courseThunkActions';
+import type { AddCourseType, QuestionType } from '../../types/courseType';
+import QuizzConstructor from '../ui/QuizzConstructor';
 
 type DynamicFieldType = [[string[]], FormDataEntryValue];
 

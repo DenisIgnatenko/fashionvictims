@@ -106,7 +106,7 @@ export default function TestDialogueModal({
 
       const percentageOfCorrectAnswers = (correctAnswerCount / questions.length) * 100;
       const isPassed = percentageOfCorrectAnswers >= 70;
-      const nextModuleId = question?.moduleId + 1;
+      const nextModuleId = question ? moduleId + 1 : moduleId;
 
       if (isPassed) {
         console.log('Тест пройден');

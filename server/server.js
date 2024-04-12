@@ -6,6 +6,7 @@ const tokensRouter = require('./routes/tokensRouter');
 const userRouter = require('./routes/userRouter');
 const quizRouter = require('./routes/quizRouter');
 const courseRouter = require('./routes/courseRouter');
+const path = require('path');
 
 require('dotenv').config();
 
@@ -18,11 +19,15 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'dist')));
 
 app.use('/api/auth', userRouter);
 app.use('/api/tokens', tokensRouter);
 app.use('/api/courses', courseRouter);
 app.use('/api/quizzes', quizRouter);
+app.use('*', (req, res) => {
+  res.sendfile(path.join(__dirname, 'dist', 'index.html'));
+});
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
