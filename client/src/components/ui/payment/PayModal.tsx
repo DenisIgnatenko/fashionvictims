@@ -12,12 +12,13 @@ import {
   Heading,
   Input,
 } from '@chakra-ui/react';
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { setPurchasedCourses } from '../../../redux/slices/courseSlice';
 import { useAppDispatch, useAppSelector } from '../../../hooks/useReduxHook';
 import { setOpenPaymentModal } from '../../../redux/slices/courseSlice';
 import { addPurchasedCourseThunk } from '../../../redux/thunkActions/courseThunkActions';
+import InputMask from 'react-input-mask';
 
 const MotionBox = motion(Box);
 const MotionButton = motion(Button);
@@ -40,11 +41,12 @@ export default function PayModal({ courseId }: payModalPropsType): JSX.Element {
 
   const submitHandler = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
-    let userId
+    let userId;
     if (user.status === 'logged') userId = user.id;
     const formData = Object.fromEntries(new FormData(e.currentTarget)) as formDataType;
     console.log(formData);
-    
+    onClose();
+
     if (formData) {
       console.log(userId, courseId);
       void dispatch(addPurchasedCourseThunk({ userId, courseId }));
@@ -53,6 +55,16 @@ export default function PayModal({ courseId }: payModalPropsType): JSX.Element {
 
   const onClose = (): void => {
     void dispatch(setOpenPaymentModal(false));
+  };
+
+  const [maskedValue, setMaskedValue] = useState('');
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    // Создаем маску с звездочками вместо вводимых символов
+    const value = event.target.value;
+    if (!value) return;
+    const maskedValue = value.replace(/./g, '*'); // Заменяем каждый символ на *
+    setMaskedValue(maskedValue);
   };
 
   return (
@@ -78,33 +90,70 @@ export default function PayModal({ courseId }: payModalPropsType): JSX.Element {
                 <VStack spacing={4}>
                   <FormControl isRequired>
                     <FormLabel>Имя владельца</FormLabel>
-                    <Input type="text" name="owner" placeholder="Иван Иванов" />
+                    <Input
+                      type="text"
+                      name="owner"
+                      placeholder="IVAN IVANOV"
+                      focusBorderColor="pink.300"
+                    />
                   </FormControl>
-
                   <FormControl isRequired>
                     <FormLabel>Номер карты</FormLabel>
-                    <Input type="text" name="card" placeholder="0000 0000 0000 0000" />
+                    <InputMask mask="9999 9999 9999 9999" maskChar={null}>
+                      {(inputProps: React.InputHTMLAttributes<HTMLInputElement>) => (
+                        <Input
+                          {...inputProps}
+                          type="text"
+                          placeholder="0000 0000 0000 0000"
+                          focusBorderColor="pink.300"
+                        />
+                      )}
+                    </InputMask>
                   </FormControl>
 
                   <FormControl isRequired>
                     <FormLabel>Срок действия</FormLabel>
-                    <Input type="text" name="expdate" placeholder="MM/YY" />
+                    <InputMask mask="99/99" maskChar="_">
+                      {(inputProps: React.InputHTMLAttributes<HTMLInputElement>) => (
+                        <Input
+                          {...inputProps}
+                          type="text"
+                          name="expdate"
+                          placeholder="MM/YY"
+                          focusBorderColor="pink.300"
+                        />
+                      )}
+                    </InputMask>
                   </FormControl>
 
                   <FormControl isRequired>
                     <FormLabel>CVV</FormLabel>
-                    <Input type="text" name="cvv" placeholder="123" />
+                    <InputMask mask="999" value={maskedValue} maskChar="*" onChange={handleChange}>
+                      {(inputProps: React.InputHTMLAttributes<HTMLInputElement>) => (
+                        <Input
+                          {...inputProps}
+                          type="text"
+                          name="cvv"
+                          placeholder="123"
+                          focusBorderColor="pink.300"
+                        />
+                      )}
+                    </InputMask>
                   </FormControl>
 
                   <MotionButton
                     type="submit"
-                    colorScheme="blue"
+                    colorScheme="pink"
+                    borderRadius={30}
+                    bg="pink.300"
+                    _hover={{ bg: 'pink.400' }}
+                    _active={{ bg: 'pink.500' }}
                     size="lg"
                     w="full"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
                   >
-                    Отправить
+                    Оплатить
                   </MotionButton>
                 </VStack>
               </form>

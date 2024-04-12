@@ -28,6 +28,7 @@ const quizeSlice = createSlice({
       state.selectedQuiz = action.payload;
     },
   },
+
   extraReducers: (builder) => {
     builder.addCase(getQuizzesByModuleId.pending, (state) => {
       state.loading = true;

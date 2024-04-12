@@ -64,6 +64,6 @@ const courseSlice = createSlice({
   },
 });
 
-export const { setPurchasedCourses, setAvailableModules, setOpenPaymentModal } =
-  courseSlice.actions;
+
+export const { setPurchasedCourses, setAvailableModules, setOpenPaymentModal} = courseSlice.actions;
 export default courseSlice.reducer;

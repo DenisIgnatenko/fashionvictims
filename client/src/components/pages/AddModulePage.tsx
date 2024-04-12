@@ -1,147 +1,146 @@
-import React, { useState } from 'react'
-import { Box, Button, Flex, FormControl, Input, useToast, Text } from '@chakra-ui/react'
-import { CKEditor } from '@ckeditor/ckeditor5-react';
+/* eslint-disable prefer-destructuring */
+import { Box, Button, Flex, FormControl, Input, Text, useToast } from '@chakra-ui/react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
 import type { EventInfo } from '@ckeditor/ckeditor5-utils';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import type { AddCourseType } from '../../types/courseType';
-import { useAppSelector } from '../../hooks/useReduxHook';
+import { useAppDispatch, useAppSelector } from '../../hooks/useReduxHook';
+import { addModuleThunk } from '../../redux/thunkActions/courseThunkActions';
+import type { AddCourseType, QuestionType } from '../../types/courseType';
+import QuizzConstructor from '../ui/QuizzConstructor';
 
+type DynamicFieldType = [[string[]], FormDataEntryValue];
 
 export default function AddModulePage(): JSX.Element {
-    const { user } = useAppSelector((state) => state.auth)
-    const [editorData, setEditorData] = useState('');
-    const { id } = useParams();
+  const { user } = useAppSelector((state) => state.auth);
+  const [editorData, setEditorData] = useState('');
+  const { id } = useParams();
+  console.log(id);
+  const dispatch = useAppDispatch();
+  const toast = useToast();
 
-        // const [question, setQuestion] = useState('');
-        // const [options, setOptions] = useState([{ variant: '', isCorrect: false, comment: '' }]);
-      
-        // const handleChangeOption = (index, key, value) => {
-        //   const newOptions = [...options];
-        //   newOptions[index][key] = value;
-        //   setOptions(newOptions);
-        // };
-      
-        // const handleAddOption = () => {
-        //   setOptions([...options, { variant: '', isCorrect: false, comment: '' }]);
-        // };
-      
-        // const handleSubmit = (e) => {
-        //   e.preventDefault();
-        //   onSubmit({ question, options });
-        //   // Reset form state if needed
-        //   setQuestion('');
-        //   setOptions([{ variant: '', isCorrect: false, comment: '' }]);
-        // };
+  const handleEditorChange = (event: EventInfo<string, unknown>, editor: ClassicEditor): void => {
+    const data = editor.getData();
+    setEditorData(data);
+  };
 
+  const submitModuleHandler = (e: React.FormEvent<HTMLFormElement & AddCourseType>): void => {
+    e.preventDefault();
+    const formData = Object.fromEntries(new FormData(e.currentTarget));
+    const { name, videoURL } = Object.fromEntries(
+      Object.entries(structuredClone(formData)).filter(
+        (el) => el[0] === 'name' || el[0] === 'videoURL',
+      ),
+    );
 
+    const dynamicFields: DynamicFieldType[] = Object.entries(structuredClone(formData))
+      .filter((el) => el[0] !== 'name' && el[0] !== 'videoURL')
+      .map((el): DynamicFieldType => [[el[0].split('-')], el[1]]);
 
-    const handleEditorChange = (event: EventInfo<string, unknown>, editor: ClassicEditor): void => {
-        console.log(editor, typeof editor)
-        const data = editor.getData();
-        setEditorData(data);
-    };
+    console.log(dynamicFields);
 
-    const submitCourseHandler = (e: React.FormEvent<HTMLFormElement & AddCourseType>): void => {
-        e.preventDefault();
+    const questions: QuestionType[] = [];
+    dynamicFields.forEach((el) => {
+      const questionIndex = parseInt(el[0][0][1], 10) - 1;
+      const answerIndex = parseInt(el[0][0][2], 10) - 1;
 
-        // const { title, file, price, description, duration, startDate } = e.currentTarget;
+      if (el[0][0][0] === 'question') {
+        questions[questionIndex] = {
+          questionText: el[1],
+          answers: [],
+          num: parseInt(el[0][0][1], 10),
+        };
+      } else {
+        if (!questions[questionIndex].answers[answerIndex]) {
+          questions[questionIndex].answers[answerIndex] = {};
+        }
 
+        if (el[0][0][0] === 'answer') {
+          questions[questionIndex].answers[answerIndex].answer = el[1];
+        } else if (el[0][0][0] === 'comment') {
+          questions[questionIndex].answers[answerIndex].comment = el[1];
+        } else if (el[0][0][0] === 'isCorrect') {
+          questions[questionIndex].answers[answerIndex].isCorrect = el[1] === 'true';
+        }
+      }
+    });
 
-        // const formData = new FormData();
-        // formData.append('title', title.value);
-        // formData.append('price', price.value);
-        // formData.append('startDate', startDate.value);
-        // formData.append('img', file.files[0]);
-        // formData.append('description', description.value);
-        // formData.append('duration', duration.value)
-        // formData.append('editorData', editorData)
-        // formData.append('bgColor', color);
-        // if (user.status === 'logged') formData.append('authorId', user.id.toString())
-        // dispatch(addCourseThunk(formData))
-        //     .unwrap()
-        //     .then() // Выслать с бека в ответе id курса, здесь перехватить и navigate(/addmodules/curse/id)
-        //     .catch(console.log)
-        // e.currentTarget.reset()
-        // setEditorData('')
-        // setColor('#E293B6')
-        // toast({
-        //     title: 'Course created.',
-        //     description: "Курс создан",
-        //     status: 'success',
-        //     duration: 4000,
-        //     isClosable: true,
-        // });
-    }
-    return (
-        <Flex p={5} overflow='hidden' bg='#4D6877'>
-            <Box borderRadius='12px' bg='#FFF0F7' p={2} as="form" width="100%" encType='multipart/form-data' display='flex' flexWrap='wrap' justifyContent='space-between'
-                // action='/api/courses' method='POST' 
-                onSubmit={submitCourseHandler}>
-                <Text textStyle={['smallTitleHeading', 'titleHeading']}>
-                    Добавим модули в курс!
-                </Text>
-                <Text m={11}>
-                    Каждая лекция должна содержать не только теоретический материал, но и практические задания,
-                    такие как анализ костюмов в фильмах, проекты по созданию костюмных концепций на основе
-                    сценариев и исследовательские работы.
-                </Text>
-                <FormControl margin='8px 0px 8px 0px'>
-                    <Input bg='white' borderRadius='12px' placeholder='Название модуля' name='name' isRequired />
-                </FormControl>
-                <FormControl margin='8px 0px 8px 0px'>
-                    <Input bg='white' borderRadius='12px' placeholder='Ссылка на видео' name='videoURL' type='text' isRequired />
-                </FormControl>
-                <Box width="100%">
-                    <CKEditor
-                        editor={ClassicEditor}
-                        data={editorData}
-                        onReady={editor => {
-                            // You can store the "editor" and use when it is needed.
+    void dispatch(addModuleThunk({ questions, videoURL, name, article: editorData, id }));
+    toast({
+      title: 'Поздравляю! Модуль создан.',
+      description:
+        'Модуль создан успешно! Можете добавить еще один или вернуться на главную страницу.',
+      status: 'success',
+      duration: 4000,
+      isClosable: true,
+      position: 'top',
+      colorScheme: 'pink',
+    });
+    e.currentTarget.reset();
+    setEditorData('');
 
-                        }}
-                        onChange={handleEditorChange}
-                        onBlur={(event, editor) => {
-                            console.log('Blur.', editor);
-                        }}
-                        onFocus={(event, editor) => {
-                            console.log('Focus.', editor);
-                        }}
-                    />
-                </Box>
-                {/* <form onSubmit={handleSubmit}>
-      <div>
-        <label>Question:</label>
-        <input type="text" value={question} onChange={(e) => setQuestion(e.target.value)} />
-      </div>
-      {options.map((option, index) => (
-        <div key={index}>
-          <label>{`Option ${index + 1}:`}</label>
-          <input
+    console.log(questions, videoURL, name, editorData);
+  };
+  return (
+    <Flex p={5} overflow="hidden" bg="#4D6877">
+      <Box
+        borderRadius="12px"
+        bg="#FFF0F7"
+        p={2}
+        as="form"
+        width="100%"
+        display="flex"
+        flexWrap="wrap"
+        justifyContent="space-between"
+        onSubmit={submitModuleHandler}
+      >
+        <Text textStyle={['smallTitleHeading', 'titleHeading']}>Добавим модули в курс!</Text>
+        <Text m={11}>
+          Каждая лекция должна содержать не только теоретический материал, но и практические
+          задания, такие как анализ костюмов в фильмах, проекты по созданию костюмных концепций на
+          основе сценариев и исследовательские работы.
+        </Text>
+        <FormControl margin="8px 0px 8px 0px">
+          <Input
+            bg="white"
+            borderRadius="12px"
+            placeholder="Название модуля"
+            name="name"
+            isRequired
+          />
+        </FormControl>
+        <FormControl margin="8px 0px 8px 0px">
+          <Input
+            bg="white"
+            borderRadius="12px"
+            placeholder="Ссылка на видео"
+            name="videoURL"
             type="text"
-            value={option.variant}
-            onChange={(e) => handleChangeOption(index, 'variant', e.target.value)}
+            isRequired
           />
-          <label>Correct:</label>
-          <input
-            type="checkbox"
-            checked={option.isCorrect}
-            onChange={(e) => handleChangeOption(index, 'isCorrect', e.target.checked)}
+        </FormControl>
+        <Box width="100%">
+          <CKEditor
+            editor={ClassicEditor}
+            data={editorData}
+            onReady={(editor) => {}}
+            onChange={handleEditorChange}
+            onBlur={(event, editor) => {}}
+            onFocus={(event, editor) => {}}
           />
-          <label>Comment:</label>
-          <input
-            type="text"
-            value={option.comment}
-            onChange={(e) => handleChangeOption(index, 'comment', e.target.value)}
-          />
-        </div>
-      ))}
-      <button type="button" onClick={handleAddOption}>Add Option</button>
-      <button type="submit">Submit</button>
-    </form> */}
-                <Flex m='auto' mt={5} justifyContent="center">
-                    <Button variant='primeVariant' type='submit'>Создать модуль</Button>
-                </Flex>
-            </Box>
-        </Flex>)
+        </Box>
+        <Flex w="100%" m="auto" mt={5} justifyContent="center">
+          <QuizzConstructor />
+          {/* <DynamicForm/> */}
+        </Flex>
+
+        <Flex w="100%" m="auto" mt={5} justifyContent="center">
+          <Button variant="primeVariant" type="submit">
+            Создать модуль
+          </Button>
+        </Flex>
+      </Box>
+    </Flex>
+  );
 }

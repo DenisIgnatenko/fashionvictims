@@ -23,6 +23,8 @@ import { logOutThunk } from '../../redux/thunkActions/authThunkActions';
 import scrollLinkStyles from '../../utils/scrollLinkStyles';
 import AuthModal from './AuthModal';
 import PayModal from './payment/PayModal';
+// import { HiOutlineLogout } from "react-icons/hi";
+import { RiLogoutCircleRLine } from "react-icons/ri";
 
 const NavBar: React.FC = () => {
   const isMobile = useBreakpointValue({ base: true, md: false });
@@ -66,7 +68,7 @@ const NavBar: React.FC = () => {
     <Flex
       borderTopRadius="30px"
       width="full"
-      mt={4}
+      mt={5}
       height="100px"
       maxWidth="100%"
       background="#4D6877"
@@ -83,9 +85,12 @@ const NavBar: React.FC = () => {
               </WrapItem>
             </Flex>
             {isMobile ? (
+              
               <Menu>
                 <MenuButton
-                  top={9}
+                  top={4}
+                  position={'relative'}
+                  right={29}
                   as={IconButton}
                   icon={<HamburgerIcon />}
                   variant="outline"
@@ -118,6 +123,8 @@ const NavBar: React.FC = () => {
                   </MenuList>
                 </MenuList>
               </Menu>
+
+              
             ) : (
               <Flex justify="center" align="center" height="100%">
                 <Center mx="auto">
@@ -169,18 +176,25 @@ const NavBar: React.FC = () => {
             )}
             {user.status === 'logged' ? (
               <>
-                <Flex justifyContent={'flex-end'} align="center">
-                  <IconButton
+                <Flex justifyContent={'flex-end'} align="center" gap={4}>
+                <RiLogoutCircleRLine 
                     onClick={() => void dispatch(logOutThunk())}
                     aria-label="Logout"
-                    icon={<NotAllowedIcon />}
-                    variant="ghost"
-                    color="whiteAlpha.900"
+                    // icon={<NotAllowedIcon />}
+                    // variant="ghost"
+
+                    color="#FFFFFF"
                   />
                   <WrapItem>
-                    <Link as={RouterLink} to={`/profile1`} style={{ textDecoration: 'none' }}>
-                      <Avatar size="md" name={user.name} src={user.img} />
-                    </Link>
+                    {user.role === 'admin' ? (
+                      <Link as={RouterLink} to={`/add`} style={{ textDecoration: 'none' }}>
+                        <Avatar size="md" name={user.name} src={user.img} />
+                      </Link>
+                    ) : (
+                      <Link as={RouterLink} to={`/profile1`} style={{ textDecoration: 'none' }}>
+                        <Avatar size="md" name={user.name} src={user.img} />
+                      </Link>
+                    )}
                   </WrapItem>
                 </Flex>
               </>
@@ -212,15 +226,16 @@ const NavBar: React.FC = () => {
               <Flex>
                 {user.status === 'logged' ? (
                   <>
-                    <IconButton
-                      onClick={() => void dispatch(logOutThunk())}
-                      aria-label="Logout"
-                      icon={<NotAllowedIcon />}
-                      variant="ghost"
-                      color="whiteAlpha.900"
-                    />
+                    <RiLogoutCircleRLine 
+                    onClick={() => void dispatch(logOutThunk())}
+                    aria-label="Logout"
+                    // icon={<NotAllowedIcon />}
+                    // variant="ghost"
+                    
+                    color="#FFFFFF"
+                  />
                     <WrapItem>
-                      <Avatar size="md" name={user.name} src={user.img} />
+                      <Avatar color={"#FFFFFF"} size="md" name={user.name} src={user.img} />
                     </WrapItem>
                   </>
                 ) : (

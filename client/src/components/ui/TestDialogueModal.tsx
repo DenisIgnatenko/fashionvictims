@@ -31,7 +31,7 @@ const listItemStyle = {
   borderRadius: '16px',
   borderColor: 'gray.200',
   paddingLeft: '30px',
-  width: '90%',
+  width: '100%',
   boxSizing: 'border-box',
 };
 
@@ -106,7 +106,7 @@ export default function TestDialogueModal({
 
       const percentageOfCorrectAnswers = (correctAnswerCount / questions.length) * 100;
       const isPassed = percentageOfCorrectAnswers >= 70;
-      const nextModuleId = question?.moduleId + 1;
+      const nextModuleId = question ? moduleId + 1 : moduleId;
 
       if (isPassed) {
         console.log('Тест пройден');
@@ -168,6 +168,7 @@ export default function TestDialogueModal({
                 {question?.options.map((option, index) => (
                   <VStack key={option.id} align="stretch" alignItems="center">
                     <ListItem
+                      p="10px"
                       sx={{
                         ...listItemStyle,
                         bg: choiceMade

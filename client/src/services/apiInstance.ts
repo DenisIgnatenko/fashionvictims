@@ -23,6 +23,7 @@ axiosInstance.interceptors.request.use((config) => {
 
 axiosInstance.interceptors.response.use(
   (res) => res,
+
   async (err: AxiosError & { config: { sent?: boolean; url?: string } }) => {
     const prevRequest = err.config;
     if (prevRequest.url?.endsWith('/tokens/refresh')) {
