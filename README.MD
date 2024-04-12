@@ -1,1 +1,1 @@
-Elbrus Bootcamp final project
+Fashion Victims 
